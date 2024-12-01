@@ -2,7 +2,7 @@
 session_start(); // Iniciar sesión
 
 // Conexión a la base de datos
-$conn = new mysqli("192.168.1.31", "admin", "CePv4dm1n4s1s", "cepvassitence");
+$conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassitence");
 
 // Verificar si la conexión fue exitosa
 if ($conn->connect_error) {

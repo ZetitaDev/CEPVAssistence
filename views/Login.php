@@ -1,5 +1,10 @@
 <?php
-session_start(); // Iniciar sesión
+
+// Si ya hay una sesión activa, redirigir al dashboard
+if (isset($_SESSION['username'])) {
+    header("Location: ../dashboard.php");
+    exit();
+}
 
 // Conexión a la base de datos
 $conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence");
@@ -8,7 +13,6 @@ $conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence")
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
-
 // Comprobar si el formulario fue enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario

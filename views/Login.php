@@ -1,4 +1,5 @@
 <?php
+session_start(); // Iniciar sesión
 
 // Si ya hay una sesión activa, redirigir al dashboard
 if (isset($_SESSION['username'])) {
@@ -13,6 +14,7 @@ $conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence")
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
+
 // Comprobar si el formulario fue enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
@@ -49,7 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -85,7 +86,7 @@ $conn->close();
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                        <input type="password" name="password" class=" form-control" placeholder="Contraseña" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

@@ -1,10 +1,10 @@
 <?php
-session_start(); // Iniciar sesión
-
 // Evitar que las páginas protegidas se almacenen en caché
 header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
 header("Pragma: no-cache"); // HTTP 1.0
 header("Expires: 0"); // Proxies
+
+session_start(); // Iniciar sesión
 
 // Verificar si la sesión está activa
 if (!isset($_SESSION['username'])) {

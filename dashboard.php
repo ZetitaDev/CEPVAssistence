@@ -7,7 +7,7 @@ header("Expires: 0"); // Proxies
 session_start(); // Iniciar sesión
 
 // Verificar si la sesión está activa
-if (!isset($_SESSION['username'])) {
+if(!isset($_SESSION['username'])) {
     // Si no hay sesión activa, redirigir al login
     header("Location: ../Login.php");
     exit();

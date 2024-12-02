@@ -1,3 +1,19 @@
+<?php
+// Evitar que las páginas protegidas se almacenen en caché
+header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1
+header("Pragma: no-cache"); // HTTP 1.0
+header("Expires: 0"); // Proxies
+
+session_start(); // Iniciar sesión
+
+// Verificar si la sesión está activa
+if (!isset($_SESSION['username'])) {
+    // Si no hay sesión activa, redirigir al login
+    header("Location: ../Login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,8 +54,13 @@
                     <i class="fas fa-user me-2"></i> John Doe
                 </button>
                 <ul class="dropdown-menu p-3 shadow" aria-labelledby="dropdownMenuButton1">
+<<<<<<< HEAD:Layout.php
                     <li><a class="dropdown-item" href=" views/EditarPerfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
                     <li><a class="dropdown-item" href=""><i class="fas fa-power-off me-2"></i>Salir</a></li>
+=======
+                    <li><a class="dropdown-item" href=""><i class="fas fa-user me-2"></i>Perfil</a></li>
+                    <li><a class="dropdown-item" href="../CEPVAssistence/includes/logout.php"><i class="fas fa-power-off me-2"></i>Salir</a></li>
+>>>>>>> 50ba77398a18f0e756536aeece95e948b799df5d:dashboard.php
                 </ul>
             </li>
         </ul>

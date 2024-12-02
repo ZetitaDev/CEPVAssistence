@@ -7,7 +7,7 @@ header("Expires: 0"); // Proxies
 session_start(); // Iniciar sesión
 
 // Verificar si la sesión está activa
-if (!isset($_SESSION['username'])) {
+if(!isset($_SESSION['username'])) {
     // Si no hay sesión activa, redirigir al login
     header("Location: ../Login.php");
     exit();
@@ -54,9 +54,9 @@ if (!isset($_SESSION['username'])) {
                     <i class="fas fa-user me-2"></i> John Doe
                 </button>
                 <ul class="dropdown-menu p-3 shadow" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href=""><i class="fas fa-user me-2"></i>Perfil</a></li>
-                    <li><a class="dropdown-item" href="../CEPVAssistence/includes/logout.php"><i class="fas fa-power-off me-2"></i>Salir</a></li>
-                </ul>
+                    <li><a class="dropdown-item" href=" views/EditarPerfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
+                    <li><a class="dropdown-item" href=""><i class="fas fa-power-off me-2"></i>Salir</a></li>
+                    </ul>
             </li>
         </ul>
     </nav>

@@ -54,14 +54,9 @@ if(!isset($_SESSION['username'])) {
                     <i class="fas fa-user me-2"></i> John Doe
                 </button>
                 <ul class="dropdown-menu p-3 shadow" aria-labelledby="dropdownMenuButton1">
-<<<<<<< HEAD:Layout.php
                     <li><a class="dropdown-item" href=" views/EditarPerfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
                     <li><a class="dropdown-item" href=""><i class="fas fa-power-off me-2"></i>Salir</a></li>
-=======
-                    <li><a class="dropdown-item" href=""><i class="fas fa-user me-2"></i>Perfil</a></li>
-                    <li><a class="dropdown-item" href="../CEPVAssistence/includes/logout.php"><i class="fas fa-power-off me-2"></i>Salir</a></li>
->>>>>>> 50ba77398a18f0e756536aeece95e948b799df5d:dashboard.php
-                </ul>
+                    </ul>
             </li>
         </ul>
     </nav>

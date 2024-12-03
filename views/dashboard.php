@@ -4,7 +4,7 @@ session_start(); // Iniciar sesión
 // Verificar si la sesión está activa
 if(!isset($_SESSION['username'])) {
     // Si no hay sesión activa, redirigir al login
-    header("Location: views/Login.php");
+    header("Location: Login.php");
     exit();
 }
 ?>
@@ -32,7 +32,7 @@ if(!isset($_SESSION['username'])) {
 <body class="hold-transition sidebar-mini">
 
 <?php
-        include 'includes/sidebar.php';
+        include '../includes/sidebar.php';
         ?>
 
     <!-- Cuerpo principal -->

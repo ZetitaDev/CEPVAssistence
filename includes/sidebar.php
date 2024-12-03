@@ -23,7 +23,7 @@
                     <li><a class="dropdown-item" href="../controllers/logout.php"><i class="fas fa-power-off me-2"></i>Salir</a></li>
                     </ul>
             </li>
-        </ul> -->
+        </ul>
 
 
   <!-- Sidebar -->

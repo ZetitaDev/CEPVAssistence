@@ -21,7 +21,7 @@
             <i class="right fas fa-angle-down"></i>
         </p>
     </a>
-    <ul class="collapse" id="submenu-estudiantes">
+    <dl class="collapse" id="submenu-estudiantes">
         <li class="nav-item">
             <a href="views/AgregarEstudiantes.php" class="nav-link">
                 <i class="fas fa-user-plus nav-icon"></i>
@@ -34,7 +34,7 @@
                 <p>Buscar</p>
             </a>
         </li>
-    </ul>
+    </dl>
 </li>
                         <li class="nav-item">
                             <a href="views/VerDocentes.php" class="nav-link">

@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Tema AdminLTE -->
@@ -17,13 +18,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE -->
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
-
-
 </head>
-
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <?php
+    <?php
         include '../includes/header.php';
         include '../includes/sidebar.php';
         ?>
@@ -31,16 +29,14 @@
         <div class="content-wrapper">
             <!-- Main content -->
             <section class="content">
-                <h1>Lista de Alumnos - <a href="views/AgregarEstudiante.phdp"
-                        class="btn btn-outline-info">Agregar Estudiante</a></h1>
+                <h1>Lista de Usuarios</h1>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <!-- ./card-header -->
                                 <div class="card-body">
-                                    <input class="form-control shadow bg-body rounded" id="myInput" type="text"
-                                        placeholder="Buscar..." style="margin: 5px">
+                                    <input class="form-control shadow bg-body rounded" id="myInput" type="text" placeholder="Buscar..." style="margin: 5px">
 
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -63,8 +59,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
+                                                    <button class="btn btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
 
@@ -77,8 +73,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Cerrar caja</button>
+                                                    <button class="btn btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
 
@@ -91,8 +87,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn  `1 btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
+                                                    <button class="btn  `1 btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
 
@@ -105,8 +101,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
+                                                    <button class="btn btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
 
@@ -119,8 +115,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
+                                                    <button class="btn btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
 
@@ -133,8 +129,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
+                                                    <button class="btn btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
 
@@ -147,8 +143,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
+                                                    <button class="btn btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
 
@@ -161,8 +157,8 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
+                                                    <button class="btn btn-warning">Editar Docente</button>
+                                                    <button class="btn btn-danger">Eliminar Docente</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -177,7 +173,6 @@
             </section>
             <!-- /.content -->
         </div>
-
         <?php
         include '../includes/footer.php';
         ?>
@@ -210,5 +205,4 @@
     </script>
 
 </body>
-
 </html>

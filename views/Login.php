@@ -1,4 +1,6 @@
 <?php
+session_start(); // Iniciar sesión
+
 // Si ya hay una sesión activa, redirigir al dashboard
 if (isset($_SESSION['username'])) {
     header("Location: ../dashboard.php");

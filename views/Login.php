@@ -3,9 +3,9 @@ session_start(); // Iniciar sesión
 
 // Si ya hay una sesión activa, redirigir al dashboard
 if (isset($_SESSION['username'])) {
-    header("Location: ../dashboard.php");
+    header("Location: ../dashboard.php"); // Asegúrate de que esta ruta sea correcta
     exit();
-}  
+}
 
 // Conexión a la base de datos
 $conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence");
@@ -27,7 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM usuarios WHERE correo = ? AND password = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ss', $username, $password);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        die("Error en la ejecución de la consulta: " . $stmt->error);
+    }
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
@@ -38,9 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['username'] = $user['correo']; // Guardar el correo en la sesión
         $_SESSION['role'] = $user['rol']; // Guardar el rol en la sesión
 
-        // Redirigir al dashboard.php (o la página que el administrador vea)
-        header("Location: ../dashboard.php");
-        exit(); // Asegurarse de que no se siga ejecutando el código
+        // Redirigir al dashboard.php
+        header("Location: ../dashboard.php"); // Asegúrate de que esta ruta sea correcta
+        exit();
     } else {
         // Credenciales incorrectas
         $error_message = "Credenciales incorrectas. Inténtalo de nuevo.";
@@ -52,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerrar la conexión a la base de datos
 $conn->close();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

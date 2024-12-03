@@ -3,7 +3,11 @@ session_start(); // Iniciar sesión
 
 // Si ya hay una sesión activa, redirigir al dashboard
 if (isset($_SESSION['username'])) {
+<<<<<<< HEAD
+    header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
+=======
     header("Location: ../dashboard.php");
+>>>>>>> 2277a29d4856d981ebfbb6c98a1b08ce8d37e099
     exit();
 }
 
@@ -39,7 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['role'] = $user['rol']; // Guardar el rol en la sesión
 
         // Redirigir al dashboard.php
+<<<<<<< HEAD
+        header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
+=======
         header("Location: ../dashboard.php");
+>>>>>>> 2277a29d4856d981ebfbb6c98a1b08ce8d37e099
         exit();
     } else {
         // Credenciales incorrectas

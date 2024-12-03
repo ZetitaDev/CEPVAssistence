@@ -3,7 +3,11 @@ session_start(); // Iniciar sesión
 
 // Si ya hay una sesión activa, redirigir al dashboard
 if (isset($_SESSION['username'])) {
+<<<<<<< HEAD
     header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
+=======
+    header("Location: ../dashboard.php");
+>>>>>>> 2277a29d4856d981ebfbb6c98a1b08ce8d37e099
     exit();
 }
 
@@ -27,9 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "SELECT * FROM usuarios WHERE correo = ? AND password = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ss', $username, $password);
-    if (!$stmt->execute()) {
-        die("Error en la ejecución de la consulta: " . $stmt->error);
-    }
+    $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
@@ -41,7 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['role'] = $user['rol']; // Guardar el rol en la sesión
 
         // Redirigir al dashboard.php
+<<<<<<< HEAD
         header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
+=======
+        header("Location: ../dashboard.php");
+>>>>>>> 2277a29d4856d981ebfbb6c98a1b08ce8d37e099
         exit();
     } else {
         // Credenciales incorrectas
@@ -54,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Cerrar la conexión a la base de datos
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,25 +75,22 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
-
-    
+    <link rel="stylesheet" href="../css/stylelogin.css">
 </head>
 <body class="hold-transition login-page">
+    <div class="image-container">
+        <img src="../css/logocepva.png" alt="Logo" class="login-image"> <!-- Imagen encima del login -->
+    </div>
+
     <div class="login-box">
         <div class="card card-outline card-primary">
-
-            <link rel="stylesheet" href="stylelogin.css">
-
             <div class="card-header text-center">
                 <a href="#" class="h1"><b>Iniciar</b> Sesión</a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg"></p>
-
-                <!-- Formulario de login -->
-                <form method="post">
+                <form method="post" id="loginForm">
                     <div class="input-group mb-3">
-                        <input type="text" name="username" class="form-control" placeholder="Correo" required>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="Correo" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -94,10 +98,10 @@ $conn->close();
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-eye toggle-password" id="togglePassword" style="cursor: pointer;"></span>
                             </div>
                         </div>
                     </div>
@@ -116,7 +120,6 @@ $conn->close();
         <div class="overlay"></div>
         <div class="error-message" id="errorMessage">
             <button class="close-btn" onclick="closeErrorMessage()">×</button>
-            
             <?php echo $error_message; ?>
         </div>
     <?php endif; ?>
@@ -134,11 +137,23 @@ $conn->close();
             }
         });
 
-        // Función para cerrar la cajita de error
+        // Función para cerrar la cajita de error y limpiar el formulario
         function closeErrorMessage() {
             document.querySelector('.error-message').style.display = 'none';
             document.querySelector('.overlay').style.display = 'none';
+            document.getElementById('loginForm').reset(); // Limpia el formulario
         }
+
+        // Mostrar/ocultar contraseña
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const passwordFieldType = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = passwordFieldType;
+
+            // Cambiar el ícono del ojo
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
     </script>
 </body>
 </html>

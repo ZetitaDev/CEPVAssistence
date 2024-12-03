@@ -1,0 +1,117 @@
+/* Estilo general para el login */
+body {
+    background-color: #f4f6f9; /* Fondo claro */
+    font-family: 'Source Sans Pro', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.h1 {
+    color: #000000; /* Negro */
+    font-size: 28px; /* Tamaño de la fuente */
+    text-decoration: none; /* Sin subrayado */
+    font-family: 'Times New Roman', serif; /* Fuente formal */
+    font-weight: bold; /* Negrita */
+}
+
+.h1:hover {
+    color: #000000; /* Azul al pasar el ratón */
+}
+
+/* Estilo para la imagen fuera del login */
+.login-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto; /* Centrar horizontalmente */
+    width: 400px; /* Ajusta el tamaño según lo necesites */
+    position: relative;
+    top: -30px; /* Ajusta la posición hacia arriba */
+    left: -20px; /* Mueve un poco hacia la izquierda */
+}
+
+.image-container {
+    text-align: center; /* Centra el contenedor */
+    margin-bottom: 20px; /* Espacio entre la imagen y el login */
+}
+
+/* Estilo personalizado para el mensaje de error flotante */
+.error-message {
+    background-color: white;
+    color: #007bff; /* Azul */
+    padding: 15px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%) scale(0); /* Comienza con escala 0 */
+    z-index: 9999; /* Asegura que se muestre por encima de otros elementos */
+    font-size: 16px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Apila texto e imagen */
+    align-items: center; /* Centra el contenido */
+    justify-content: center;
+    transition: transform 0.5s ease-in-out; /* Transición para el zoom */
+}
+
+/* Botón de cierre (X) */
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    color: #007bff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Estilo para el fondo oscuro (opcional) */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+}
+
+/* Ajustes para el formulario de login */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group .form-control {
+    border-radius: 0.25rem;
+}
+
+.input-group-text {
+    background-color: #f4f6f9;
+    border: 1px solid #ced4da;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Ojo para mostrar/ocultar contraseña */
+.toggle-password {
+    color: #6c757d;
+}
+
+.toggle-password:hover {
+    color: #000;
+}

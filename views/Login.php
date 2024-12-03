@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); // Asegurarse de que no se siga ejecutando el código
     } else {
         // Credenciales incorrectas
-        $error_message = "DATOS INCORRECTOS. Inténtalo de nuevo.";
+        $error_message = "Credenciales incorrectas. Inténtalo de nuevo.";
     }
 
     $stmt->close(); // Cerrar el statement
@@ -68,7 +68,7 @@ $conn->close();
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
 
-   
+    
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
@@ -113,8 +113,9 @@ $conn->close();
     <!-- Fondo oscuro para el efecto flotante (opcional) -->
     <?php if (!empty($error_message)): ?>
         <div class="overlay"></div>
-        <div class="error-message">
+        <div class="error-message" id="errorMessage">
             <button class="close-btn" onclick="closeErrorMessage()">×</button>
+            
             <?php echo $error_message; ?>
         </div>
     <?php endif; ?>
@@ -125,6 +126,13 @@ $conn->close();
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 
     <script>
+        // Función para mostrar el mensaje de error con efecto de zoom
+        $(document).ready(function() {
+            if ($('#errorMessage').length) {
+                $('#errorMessage').css('transform', 'translateX(-50%) scale(1)'); // Aparece con efecto zoom
+            }
+        });
+
         // Función para cerrar la cajita de error
         function closeErrorMessage() {
             document.querySelector('.error-message').style.display = 'none';

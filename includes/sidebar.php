@@ -52,7 +52,7 @@
             <i class="right fas fa-angle-down"></i>
         </p>
     </a>
-    <ul class="collapse" id="submenu-administrador">
+    <dl class="collapse" id="submenu-administrador">
         <li class="nav-item">
             <a href="views/AgregarUsuario.php" class="nav-link">
                 <i class="fas fa-user-plus nav-icon"></i>
@@ -65,7 +65,7 @@
                 <p>Lista de Usuarios</p>
             </a>
         </li>
-    </ul>
+    </dl>
 </li>
 
 

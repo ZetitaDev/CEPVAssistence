@@ -73,7 +73,7 @@ $conn->close();
                 <a href="#" class="h1"><b>Iniciar</b> Sesión</a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Ingrese sus credenciales para iniciar sesión</p>
+                <p class="login-box-msg"></p>
 
                 <!-- Formulario de login -->
                 <form method="post">

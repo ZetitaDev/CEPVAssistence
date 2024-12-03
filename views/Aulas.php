@@ -31,7 +31,7 @@
             <!-- Main content -->
             <section class="content"><div class="container">
                 <div style="margin-top: 10px; margin-bottom: -20px">
-                <h1>Aula - <a class="btn btn-info">Aqui va el aula</a></h1>
+                <h1>Aula - Aqui va el aula</h1>
 </div>
 
                 

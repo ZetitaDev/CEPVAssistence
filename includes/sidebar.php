@@ -12,9 +12,7 @@
                                 <i class="nav-icon fas fa-chalkboard-teacher"></i>
                                 <p>Asistencia</p>
                             </a>
-                        </li>
-
-                                                    
+                        </li>                                           
   <li class="nav-item">
     <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#submenu-estudiantes" aria-expanded="false">
         <i class="fas fa-graduation-cap nav-icon"></i>
@@ -38,7 +36,6 @@
         </li>
     </ul>
 </li>
-
                         <li class="nav-item">
                             <a href="views/VerDocentes.php" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>

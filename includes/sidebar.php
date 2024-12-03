@@ -68,6 +68,15 @@
     </ul>
 </li>
 
+
+<li class="nav-item">
+                            <a href="views/Aulas.php" class="nav-link">
+                                <i class="fa-solid fa-school"></i>
+                                <p>Aulas</p>
+                            </a>
+                        </li>
+
+
                     </ul>
                 </nav>
             </div>

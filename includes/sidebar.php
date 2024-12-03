@@ -1,4 +1,31 @@
 <?php if (!isset($hideSidebar) || !$hideSidebar): ?>
+
+
+    <!-- Navbar
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="#" class="nav-link">Inicio</a>
+            </li>
+        </ul> -->
+
+        <!-- Dropdown de Usuario -->
+        <!-- <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+                <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user me-2"></i> John Doe
+                </button>
+                <ul class="dropdown-menu p-3 shadow" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="views/EditarPerfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
+                    <li><a class="dropdown-item" href="../controllers/logout.php"><i class="fas fa-power-off me-2"></i>Salir</a></li>
+                    </ul>
+            </li>
+        </ul> -->
+
+
   <!-- Sidebar -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="../dashboard.php" class="brand-link">

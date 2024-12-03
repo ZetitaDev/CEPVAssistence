@@ -32,7 +32,6 @@ if(!isset($_SESSION['username'])) {
 <body class="hold-transition sidebar-mini">
 
 <?php
-        include 'includes/header.php';
         include 'includes/sidebar.php';
         ?>
 

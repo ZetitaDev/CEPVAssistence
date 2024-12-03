@@ -23,8 +23,8 @@
     </a>
     <dl class="collapse" id="submenu-estudiantes">
         <li class="nav-item">
-            <a href="views/AgregarEstudiantes.php" class="nav-link">
-                <i class="fas fa-user-plus nav-icon"></i>
+        <a href="/CEPVAssistence/views/AgregarEstudiantes.php" class="nav-link">
+              <i class="fas fa-user-plus nav-icon"></i>
                 <p>Agregar</p>
             </a>
         </li>

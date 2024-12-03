@@ -8,7 +8,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
                         <li class="nav-item">
-                            <a href="views/AgregarEstudiantes.php" class="nav-link">
+                            <a href="views/VerAsistencia.php" class="nav-link">
                                 <i class="nav-icon fas fa-chalkboard-teacher"></i>
                                 <p>Asistencia</p>
                             </a>

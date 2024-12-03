@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); // Asegurarse de que no se siga ejecutando el código
     } else {
         // Credenciales incorrectas
-        $error_message = "Credenciales incorrectas. Inténtalo de nuevo.";
+        $error_message = "DATOS INCORRECTOS. Inténtalo de nuevo.";
     }
 
     $stmt->close(); // Cerrar el statement

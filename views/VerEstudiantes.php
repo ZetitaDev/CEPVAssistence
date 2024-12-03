@@ -24,7 +24,6 @@
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <?php
-        include '../includes/header.php';
         include '../includes/sidebar.php';
         ?>
         <!-- Content Wrapper. Contains page content -->

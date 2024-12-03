@@ -279,14 +279,16 @@
     <!-- Busqueda  en vivo de los paises para el campo input "nacionalidad"-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#nacionalidad').select2({
-                placeholder: "Seleccione su nacionalidad",
-                allowClear: true
+
+    
+        <!-- <script>
+            $(document).ready(function () {
+                $('#nacionalidad').select2({
+                    placeholder: "Seleccione su nacionalidad",
+                    allowClear: true
+                });
             });
-        });
-    </script>
+        </script> -->
 
         <?php
         include '../includes/footer.php';

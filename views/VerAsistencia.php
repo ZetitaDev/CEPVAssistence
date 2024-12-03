@@ -1,3 +1,7 @@
+<?php
+session_start(); // Iniciar sesión
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -29,9 +33,7 @@
         <div class="content-wrapper">
             <!-- Main content -->
             <section class="content"><div class="container">
-                <h1>Asistencia de alumnos - <a class="btn btn-info">Presentar Asistencia</a></h1>
-
-                
+                <h1>Asistencia de alumnos - <a class="btn btn-info">Presentar Asistencia</a></h1>        
     <div class="row">
       <div class="col-md-6 offset-md-9" style="margin-top: -55px; margin-bottom: 5px;">
         <label for="selectBox" class="form-label " style="margin-bottom: -15px;">Selecciona el curso:</label>

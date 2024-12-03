@@ -5,7 +5,7 @@ session_start(); // Iniciar sesión
 if (isset($_SESSION['username'])) {
     header("Location: ../dashboard.php");
     exit();
-}
+}  
 
 // Conexión a la base de datos
 $conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence");
@@ -14,6 +14,8 @@ $conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence")
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
+
+$error_message = ""; // Variable para almacenar el mensaje de error
 
 // Comprobar si el formulario fue enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -41,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); // Asegurarse de que no se siga ejecutando el código
     } else {
         // Credenciales incorrectas
-        echo "<script>alert('Credenciales incorrectas. Inténtalo de nuevo.');</script>";
+        $error_message = "Credenciales incorrectas. Inténtalo de nuevo.";
     }
 
     $stmt->close(); // Cerrar el statement
@@ -65,10 +67,15 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+
+   
 </head>
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="card card-outline card-primary">
+
+            <link rel="stylesheet" href="stylelogin.css">
+
             <div class="card-header text-center">
                 <a href="#" class="h1"><b>Iniciar</b> Sesión</a>
             </div>
@@ -86,7 +93,7 @@ $conn->close();
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class=" form-control" placeholder="Contraseña" required>
+                        <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -103,9 +110,26 @@ $conn->close();
         </div>
     </div>
 
+    <!-- Fondo oscuro para el efecto flotante (opcional) -->
+    <?php if (!empty($error_message)): ?>
+        <div class="overlay"></div>
+        <div class="error-message">
+            <button class="close-btn" onclick="closeErrorMessage()">×</button>
+            <?php echo $error_message; ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+
+    <script>
+        // Función para cerrar la cajita de error
+        function closeErrorMessage() {
+            document.querySelector('.error-message').style.display = 'none';
+            document.querySelector('.overlay').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

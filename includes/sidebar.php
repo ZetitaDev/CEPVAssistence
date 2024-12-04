@@ -13,7 +13,7 @@ if(!isset($_SESSION['username'])) {
   <!-- Sidebar -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <a href="../views/dashboard.php" class="brand-link">
-                <span class="brand-text font-weight-light">CEPVAssistence</span>
+                <span class="brand-text font-weight-light">CEPVAssistences</span>
             </a>
             <div class="sidebar">
                 <nav class="mt-2">

@@ -1,6 +1,6 @@
 <?php
-        include '../includes/sidebar.php';
-        ?>
+include '../includes/sidebar.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -40,8 +40,7 @@
         }
 
         .profile-picture input[type="file"] {
-            display: block;
-            margin: 10px auto;
+            display: none;
         }
 
         .form-group {
@@ -61,23 +60,16 @@
             box-sizing: border-box;
         }
 
-        .password-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .password-container input {
-            padding-right: 30px;
-        }
-
-        .toggle-password {
-            position: absolute;
-            top: 70%;
-            right: 5px;
-            transform: translateY(-50%);
+        .avatar-option {
             cursor: pointer;
-            font-size: 16px;
-            color: #000000;
+            width: 100%;
+            height: auto;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .avatar-option:hover {
+            transform: scale(1.1);
+            border: 2px solid #007bff;
         }
     </style>
 </head>
@@ -92,11 +84,9 @@
                     <h1 class="m-0">Mi Perfil</h1>
                 </div>
             </div>
-            <!-- /.content-header -->
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <!-- Main row -->
                     <div class="row">
                         <section class="col-lg-12 connectedSortable">
                             <div class="card">
@@ -111,7 +101,6 @@
                                                 <label for="nombre">Nombre</label>
                                                 <input type="text" id="nombre" placeholder="Ingrese su nombre">
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="sexo">Sexo</label>
                                                 <select id="sexo">
@@ -120,24 +109,19 @@
                                                     <option value="femenino">Femenino</option>
                                                 </select>
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="edad">Edad</label>
                                                 <input type="number" id="edad" placeholder="Ingrese su Edad">
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="direccion">Dirección</label>
                                                 <input type="text" id="direccion" placeholder="Ingrese su Dirección">
                                             </div>
-
                                             <div class="form-group">
                                                 <label for="email">Correo Electrónico</label>
                                                 <input type="email" id="email" placeholder="Ingrese su Correo">
                                             </div>
-
                                         </div>
-
 
                                         <!-- Column 2 -->
                                         <div class="form-column">
@@ -195,19 +179,18 @@
                                                 <label for="telefono">Teléfono</label>
                                                 <input type="text" id="telefono" placeholder="Ingrese su teléfono">
                                             </div>
-
-                                            <div class="form-group password-container">
+                                            <div class="form-group">
                                                 <label for="password">Contraseña</label>
-                                                <input type="password" id="password" placeholder="Ingrese su teléfono">
-                                                <i class="fas fa-eye toggle-password" onclick="togglePassword()"></i>
+                                                <input type="password" id="password" placeholder="Ingrese su contraseña">
                                             </div>
-
                                         </div>
 
                                         <!-- Column 3 -->
                                         <div class="profile-picture">
                                             <img src="https://via.placeholder.com/150" alt="Foto de perfil"
                                                 id="profile-img">
+                                            <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar
+                                                Foto</button>
                                             <input type="file" id="upload-photo" accept="image/*"
                                                 onchange="updateProfileImage(event)">
                                         </div>
@@ -215,33 +198,69 @@
                                 </div>
                             </div>
 
-
                             <div class="d-grid gap-2 d-md-block">
                                 <button class="btn btn-warning" type="button">Actualizar</button>
                                 <button class="btn btn-secondary" type="button">Cancelar</button>
                             </div>
 
+
+                        </section>
                     </div>
-
-
+                </div>
             </section>
         </div>
-        <!-- /.row -->
-        </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+
+    <!-- Modal para selección de avatares -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="avatarModalLabel">Seleccionar Avatar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-4 mb-3">
+                            <img src="https://via.placeholder.com/150/1" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                        <div class="col-4 mb-3">
+                            <img src="https://via.placeholder.com/150/2" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                        <div class="col-4 mb-3">
+                            <img src="https://via.placeholder.com/150/3" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="openFilePicker()">Subir Imagen</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
 
-
-    <!--  Visualizacion de la imagen en tiempo real con javascript-->
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        function openAvatarModal() {
+            const avatarModal = new bootstrap.Modal(document.getElementById('avatarModal'));
+            avatarModal.show();
+        }
+
+        function selectAvatar(src) {
+            document.getElementById('profile-img').src = src;
+            const avatarModal = bootstrap.Modal.getInstance(document.getElementById('avatarModal'));
+            avatarModal.hide();
+        }
+
+        function openFilePicker() {
+            document.getElementById('upload-photo').click();
+        }
+
         function updateProfileImage(event) {
             const file = event.target.files[0];
             if (file) {
@@ -254,45 +273,8 @@
         }
     </script>
 
-    <!-- Funcion para ver y ocultar
-    El campo contraseña se alterna de tipo "password" a tipo "text" -->
-
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.querySelector('.toggle-password');
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-    </script>
-
-
-    <!-- Busqueda  en vivo de los paises para el campo input "nacionalidad"-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-
-    
-        <!-- <script>
-            $(document).ready(function () {
-                $('#nacionalidad').select2({
-                    placeholder: "Seleccione su nacionalidad",
-                    allowClear: true
-                });
-            });
-        </script> -->
-
-        <?php
+</body>
+<?php
         include '../includes/footer.php';
         ?>
-
-</body>
-
 </html>

@@ -12,10 +12,12 @@ if(!isset($_SESSION['username'])) {
 <?php if (!isset($hideSidebar) || !$hideSidebar): ?>
   <!-- Sidebar -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="../views/dashboard.php" class="brand-link">
-                <span class="brand-text font-weight-light">CEPVAssistences</span>
-            </a>
-            <div class="sidebar">
+    <a href="../views/dashboard.php" class="brand-link d-flex align-items-center">
+        <!-- Imagen pequeña al lado del texto -->
+        <img src="../css/loguito.png" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8; width: 25px; height: 25px; margin-right: 10px;">
+        <span class="brand-text font-weight-light">CEPVAssistences</span>
+    </a>
+    <div class="sidebar">
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
                         <li class="nav-item">

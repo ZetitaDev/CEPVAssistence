@@ -15,63 +15,7 @@ include '../includes/sidebar.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
 
     <title>Dashboard</title>
-    <style>
-        .form-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .form-column {
-            flex: 1;
-        }
-
-        .profile-picture {
-            text-align: center;
-        }
-
-        .profile-picture img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-
-        .profile-picture input[type="file"] {
-            display: none;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-
-        .avatar-option {
-            cursor: pointer;
-            width: 100%;
-            height: auto;
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .avatar-option:hover {
-            transform: scale(1.1);
-            border: 2px solid #007bff;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/styleperfil.css">
 </head>
 
 <body class="hold-transition sidebar-mini">

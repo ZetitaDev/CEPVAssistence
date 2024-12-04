@@ -131,7 +131,7 @@ include '../includes/sidebar.php';
 
                                         <!-- Column 3 -->
                                         <div class="profile-picture">
-                                            <img src="https://via.placeholder.com/150" alt="Foto de perfil"
+                                            <img src=  "../avatares/usuario.png" alt="Foto de perfil"
                                                 id="profile-img"><br>
                                             <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar
                                                 Foto</button>

@@ -80,16 +80,12 @@ if(!isset($_SESSION['username'])) {
         </li>
     </dl>
 </li>
-
-
 <li class="nav-item">
-                            <a href="Aulas.php" class="nav-link">
-                                <i class="fa-solid fa-school"></i>
-                                <p>Aulas</p>
-                            </a>
-                        </li>
-
-
+    <a href="Aulas.php" class="nav-link">
+    <i class="fa-solid fa-school"></i>
+    <p>Aulas</p>
+    </a>
+    </li>
                     </ul>
                 </nav>
             </div>

@@ -1,0 +1,15 @@
+.brand-link {
+    padding-left: 25px; /* Ajusta el contenido completo del enlace hacia la derecha */
+}
+
+.brand-image {
+    margin-right: 10px; /* Espacio entre la imagen y el texto */
+    width: 30px; /* Tamaño del logo */
+    height: 30px;
+}
+
+.text-shift {
+    margin-left: 20px; /* Ajusta esta cantidad para mover más el texto */
+    font-size: 16px;   /* Ajusta el tamaño del texto */
+    white-space: nowrap; /* Evita que el texto se corte o envuelva */
+}

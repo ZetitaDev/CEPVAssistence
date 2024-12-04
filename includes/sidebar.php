@@ -13,9 +13,9 @@ if(!isset($_SESSION['username'])) {
   <!-- Sidebar -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="../views/dashboard.php" class="brand-link d-flex align-items-center">
-        <!-- Imagen pequeña al lado del texto -->
-        <img src="../css/loguito.png" alt="Logo" style="opacity: .8; width: 25px; height: 25px; margin-right: 10px;">
-        <span class="brand-text font-weight-light">CEPVAssistences</span>
+        <!-- Imagen pequeña -->
+        <img src="../css/loguito.png" alt="Logo" class="brand-image">
+        <span class="brand-text font-weight-light text-shift">CEPVAssistences</span>
     </a>
     <div class="sidebar">
                 <nav class="mt-2">

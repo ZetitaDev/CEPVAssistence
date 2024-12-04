@@ -166,15 +166,35 @@ include '../includes/sidebar.php';
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-4 mb-3">
-                            <img src="https://via.placeholder.com/150/1" class="img-thumbnail avatar-option"
+                            <img src="../avatares/nino.png" class="img-thumbnail avatar-option"
                                 onclick="selectAvatar(this.src)">
                         </div>
                         <div class="col-4 mb-3">
-                            <img src="https://via.placeholder.com/150/2" class="img-thumbnail avatar-option"
+                            <img src="../avatares/hombre.png" class="img-thumbnail avatar-option"
                                 onclick="selectAvatar(this.src)">
                         </div>
                         <div class="col-4 mb-3">
-                            <img src="https://via.placeholder.com/150/3" class="img-thumbnail avatar-option"
+                            <img src="../avatares/hombre chaqueta roja.png" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                        <div class="col-4 mb-3">
+                            <img src="../avatares/jugador.png" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                        <div class="col-4 mb-3">
+                            <img src="../avatares/hombre rubio.png" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                        <div class="col-4 mb-3">
+                            <img src="../avatares/mujerpcorto.png" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                        <div class="col-4 mb-3">
+                            <img src="../avatares/mujer morena.png" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
+                        <div class="col-4 mb-3">
+                            <img src="../avatares/mujer.png" class="img-thumbnail avatar-option"
                                 onclick="selectAvatar(this.src)">
                         </div>
                     </div>
@@ -219,7 +239,7 @@ include '../includes/sidebar.php';
 
         function removeProfileImage() {
     const profileImg = document.getElementById('profile-img'); // Cambia 'profile-img' si usas otro id
-    profileImg.src = "https://via.placeholder.com/150"; // Imagen predeterminada
+    profileImg.src = "../avatares/usuario.png"; // Imagen predeterminada
 }
     </script>
 

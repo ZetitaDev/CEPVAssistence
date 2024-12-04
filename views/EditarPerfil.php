@@ -180,9 +180,10 @@ include '../includes/sidebar.php';
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="openFilePicker()">Subir Imagen</button>
-                </div>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+    <button type="button" class="btn btn-primary" onclick="openFilePicker()">Subir Imagen</button>
+    <button type="button" class="btn btn-danger" onclick="removeProfileImage()">Eliminar Foto de Perfil</button>
+</div>
             </div>
         </div>
     </div>
@@ -215,6 +216,11 @@ include '../includes/sidebar.php';
                 reader.readAsDataURL(file);
             }
         }
+
+        function removeProfileImage() {
+    const profileImg = document.getElementById('profile-img'); // Cambia 'profile-img' si usas otro id
+    profileImg.src = "https://via.placeholder.com/150"; // Imagen predeterminada
+}
     </script>
 
 </body>

@@ -178,10 +178,6 @@ include '../includes/sidebar.php';
                                 onclick="selectAvatar(this.src)">
                         </div>
                         <div class="col-4 mb-3">
-                            <img src="../avatares/jugador.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
                             <img src="../avatares/hombre rubio.png" class="img-thumbnail avatar-option"
                                 onclick="selectAvatar(this.src)">
                         </div>

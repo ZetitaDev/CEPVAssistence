@@ -1,14 +1,3 @@
-<?php
-session_start(); // Iniciar sesión
-
-// Verificar si la sesión está activa
-if(!isset($_SESSION['username'])) {
-    // Si no hay sesión activa, redirigir al login
-    header("Location: Login.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>

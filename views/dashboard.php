@@ -33,40 +33,27 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>Día</h3>
-                        <p></p>
+                        <h3>150</h3>
+                        <p>Nuevas órdenes</p>
                     </div>
+                    <div class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-
-   
-
-
-
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>Semana</h3>
-                        <p></p>
+                        <h3>53%</h3>
+                        <p>Tasa de conversión</p>
                     </div>
-               
+                    <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Más info <i class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>Mes</h3>
-                        <p></p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>Año</h3>
-                        <p></p>
-                    </div>
-        
-                </div>
         </div>
         <!-- /.row -->
         <!-- Main row -->

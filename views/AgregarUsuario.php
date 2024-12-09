@@ -116,6 +116,7 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-container">
+                                        <form>
                                         <!-- Column 1 -->
                                         <div class="form-column">
                                             <div class="form-group">
@@ -181,6 +182,7 @@
                             <div class="form-group mx-auto p-2" style="width: 200px;">
                                 <input type="submit" class="btn btn-primary"></input>
                             </div>
+                            </form>
                         </section>
                     </div>
                     <!-- /.row -->

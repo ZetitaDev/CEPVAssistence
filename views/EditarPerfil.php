@@ -242,9 +242,8 @@ include '../includes/sidebar.php';
     profileImg.src = "../avatares/usuario.png"; // Imagen predeterminada
 }
     </script>
-
-</body>
 <?php
         include '../includes/footer.php';
         ?>
+</body>
 </html>

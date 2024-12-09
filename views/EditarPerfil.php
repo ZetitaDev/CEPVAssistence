@@ -146,6 +146,7 @@ include '../includes/sidebar.php';
                                             <input type="file" id="upload-photo" accept="image/*"
                                                 onchange="updateProfileImage(event)">
                                         </div>
+                                        
                                 </div>
                             </div>
                         </section>
@@ -211,8 +212,6 @@ include '../includes/sidebar.php';
             </div>
         </div>
     </div>
-
-  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function openAvatarModal() {
@@ -250,5 +249,4 @@ include '../includes/sidebar.php';
         include '../includes/footer.php';
         ?>
 </body>
-
 </html>

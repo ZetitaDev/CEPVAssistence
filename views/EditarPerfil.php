@@ -41,18 +41,6 @@ include '../includes/sidebar.php';
                                     <div class="form-container">
                                         <!-- Column 1 -->
 
-                                        <div class="profile-picture">
-                                            <img src=  "../avatares/usuario.png" alt="Foto de perfil"
-                                                id="profile-img"><br>
-                                            <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar
-                                                Foto</button>
-                                            <input type="file" id="upload-photo" accept="image/*"
-                                                onchange="updateProfileImage(event)">
-                                                
-
-
-                                        </div>
-
                                         <div class="form-column">
                                             <div class="form-group">
                                                 <label for="nombre">Nombre</label>
@@ -149,6 +137,15 @@ include '../includes/sidebar.php';
                                             
                                        
                                     </div>
+                                      <!-- Column 3 -->
+                                      <div class="profile-picture">
+                                            <img src=  "../avatares/usuario.png" alt="Foto de perfil"
+                                                id="profile-img"><br>
+                                            <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar
+                                                Foto</button>
+                                            <input type="file" id="upload-photo" accept="image/*"
+                                                onchange="updateProfileImage(event)">
+                                        </div>
                                 </div>
                             </div>
                         </section>
@@ -249,9 +246,9 @@ include '../includes/sidebar.php';
     profileImg.src = "../avatares/usuario.png"; // Imagen predeterminada
 }
     </script>
-
-</body>
 <?php
         include '../includes/footer.php';
         ?>
+</body>
+
 </html>

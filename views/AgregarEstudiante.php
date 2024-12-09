@@ -3,25 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Tema AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
-</head>
-
-
-
-    <title>Dashboard</title>
+    <title>Nuevo Estudiante</title>
     <style>
         .form-container {
             display: flex;
@@ -38,62 +26,35 @@
             text-align: center;
         }
 
-            .profile-picture img {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                object-fit: cover;
-                margin-bottom: 10px;
-            }
-
-            .profile-picture input[type="file"] {
-                display: block;
-                margin: 10px auto;
-            }
+        .profile-picture img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
 
         .form-group {
             margin-bottom: 15px;
         }
 
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-
-            .form-group input, .form-group select {
-                width: 100%;
-                padding: 8px;
-                box-sizing: border-box;
-            }
-
-        .password-container {
-            position: relative;
-            display: inline-block;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-            .password-container input {
-                padding-right: 30px;
-            }
-
-        .toggle-password {
-            position: absolute;
-            top: 70%;
-            right: 5px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 16px;
-            color: #000000;
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
         }
-
     </style>
-
-
+</head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-    <?php
-        include '../includes/sidebar.php';
-        ?>
+        <?php include '../includes/sidebar.php'; ?>
+
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <!-- Content Header -->
@@ -102,159 +63,139 @@
                     <h1 class="m-0">Nuevo Estudiante</h1>
                 </div>
             </div>
-            <!-- /.content-header -->
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-
-                    <!-- Main row -->
-                    <div class="row">
-                        <section class="col-lg-12 connectedSortable">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-graduation-cap nav-icon"></i> Agrega un nuevo Estudiante</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-container">
-                                        <!-- Column 1 -->
-                                        <div class="form-column">
-                                            <div class="form-group">
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" id="nombre" placeholder="Ingrese el nombre del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="sexo">Sexo</label>
-                                                <select id="sexo">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="masculino">Masculino</option>
-                                                    <option value="femenino">Femenino</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="nacimiento">Fecha de Ingreso</label>
-                                                <input type="date" id="nacimiento" placeholder="Ingrese la fecha de ingreso del/la Estudiante">
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label for="sexo">Estado</label>
-                                                <select id="sexo">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="masculino">Activo</option>
-                                                    <option value="femenino">Retirado</option>
-                                                </select>
-                                            </div>
-
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-graduation-cap nav-icon"></i> Agrega un nuevo Estudiante</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" action="" enctype="multipart/form-data">
+                                <div class="form-container">
+                                    <!-- Columna 1 -->
+                                    <div class="form-column">
+                                        <div class="form-group">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre" required>
                                         </div>
-
-
-                                        <!-- Column 2 -->
-                                        <div class="form-column">
-                                            <div class="form-group">
-                                                <label for="apellido">Apellido</label>
-                                                <input type="text" id="apellido" placeholder="Ingrese el apellido del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="nacimiento">Fecha de Nacimiento</label>
-                                                <input type="date" id="nacimiento" placeholder="Ingrese la Fecha de Nacimiento del/la Estudiante">
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label for="telefono">Teléfono</label>
-                                                <input type="text" id="telefono" placeholder="Ingrese el teléfono del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="telefono">Curso</label>
-                                                <input type="text" id="telefono" placeholder="Ingrese el curso del/la Estudiante">
-                                            </div>
-
-
+                                        <div class="form-group">
+                                            <label for="apellidos">Apellidos</label>
+                                            <input type="text" id="apellidos" name="apellidos" placeholder="Ingrese los apellidos" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="sexo">Sexo</label>
+                                            <select id="sexo" name="sexo" required>
+                                                <option value="">Seleccione</option>
+                                                <option value="M">Masculino</option>
+                                                <option value="F">Femenino</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="estado">Estado</label>
+                                            <select id="estado" name="estado" required>
+                                                <option value="">Seleccione</option>
+                                                <option value="Activo">Activo</option>
+                                                <option value="Retirado">Retirado</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Columna 2 -->
+                                    <div class="form-column">
+                                        <div class="form-group">
+                                            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                                            <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="fecha_ingreso">Fecha de Ingreso</label>
+                                            <input type="date" id="fecha_ingreso" name="fecha_ingreso" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="telefono">Teléfono</label>
+                                            <input type="text" id="telefono" name="telefono" placeholder="Ingrese el teléfono" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="telefono_tutor">Teléfono del Tutor</label>
+                                            <input type="text" id="telefono_tutor" name="telefono_tutor" placeholder="Ingrese el teléfono del tutor" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="foto">Foto de Perfil</label>
+                                            <input type="file" id="foto" name="foto" accept="image/*">
                                         </div>
                                     </div>
                                 </div>
-
-
-                               
-                               
-                            </div>
-                            <div class="form-group mx-auto p-2" style="width: 200px;">
-                                <input type="submit" class="btn btn-primary"></input>
-                            </div>
-                        </section>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary">Registrar Estudiante</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <!-- /.row -->
                 </div>
-               
             </section>
-            <!-- /.content -->
         </div>
-        <?php
-        include '../includes/footer.php';
-        ?>
-     
-        <!-- /.content-wrapper -->
+
+        <?php include '../includes/footer.php'; ?>
     </div>
 
+    <!-- Procesar formulario -->
+    <?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Crear conexión
+    $conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence");
 
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
+    // Verificar conexión
+    if ($conn->connect_error) {
+        die('Error de conexión: ' . $conn->connect_error);
+    }
 
+    // Recuperar datos del formulario
+    $nombre = $_POST['nombre'];
+    $apellidos = $_POST['apellidos'];
+    $sexo = $_POST['sexo'];
+    $estado = $_POST['estado'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $fecha_ingreso = $_POST['fecha_ingreso'];
+    $telefono = $_POST['telefono'];
+    $telefono_tutor = $_POST['telefono_tutor'];
 
-    <!--  Visualizacion de la imagen en tiempo real con javascript-->
-    <script>
-        function updateProfileImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('profile-img').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
+    // Manejo de la foto
+    $foto_nombre = $_FILES['foto']['name'];
+    $foto_tmp = $_FILES['foto']['tmp_name'];
+    $directorio = __DIR__ . "/uploads/";
 
-    <!-- Funcion para ver y ocultar
-    El campo contraseña se alterna de tipo "password" a tipo "text" -->
+    // Crear la carpeta "uploads" si no existe
+    if (!is_dir($directorio)) {
+        mkdir($directorio, 0777, true);
+    }
 
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.querySelector('.toggle-password');
+    $foto_destino = $directorio . basename($foto_nombre);
 
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
+    if (move_uploaded_file($foto_tmp, $foto_destino)) {
+        // Guardar la ruta relativa en la base de datos
+        $foto_db_path = "uploads/" . basename($foto_nombre);
+
+        // Preparar la consulta SQL
+        $query = "INSERT INTO preprimario_a (nombre, apellidos, sexo, estado, fecha_nacimiento, fecha_ingreso, telefono, telefono_tutor, foto) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        if ($stmt) {
+            $stmt->bind_param('sssssssss', $nombre, $apellidos, $sexo, $estado, $fecha_nacimiento, $fecha_ingreso, $telefono, $telefono_tutor, $foto_db_path);
+
+            if ($stmt->execute()) {
+                echo "<script>alert('Estudiante registrado correctamente');</script>";
             } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
+                echo "<script>alert('Error al registrar al estudiante: " . $stmt->error . "');</script>";
             }
+            $stmt->close();
+        } else {
+            echo "<script>alert('Error en la consulta SQL: " . $conn->error . "');</script>";
         }
-    </script>
+    } else {
+        echo "<script>alert('Error al subir la foto');</script>";
+    }
 
-
-    <!-- Busqueda  en vivo de los paises para el campo input "nacionalidad"-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#nacionalidad').select2({
-                placeholder: "Seleccione su nacionalidad",
-                allowClear: true
-            });
-        });
-    </script>
-
+    $conn->close();
+}
+?>
 </body>
 </html>

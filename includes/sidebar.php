@@ -2,11 +2,40 @@
 session_start(); // Iniciar sesión
 
 // Verificar si la sesión está activa
-if(!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) {
     // Si no hay sesión activa, redirigir al login
     header("Location: Login.php");
     exit();
 }
+
+// Conectar a la base de datos
+$conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence");
+
+// Verificar conexión
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+// Obtener el nombre del usuario actual
+$username = $_SESSION['username']; // Supongamos que el username (correo) se guarda en la sesión
+
+$query = "SELECT nombre FROM usuarios WHERE correo = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Verificar si se encontró el usuario
+if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+    $nombreUsuario = $user['nombre'];
+} else {
+    // En caso de que no se encuentre, usar un valor genérico
+    $nombreUsuario = "Usuario";
+}
+
+$stmt->close();
+$conn->close();
 ?>
 
 <?php if (!isset($hideSidebar) || !$hideSidebar): ?>
@@ -126,14 +155,14 @@ if(!isset($_SESSION['username'])) {
         <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
                 <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user me-2"></i> John Doe
+                    <i class="fas fa-user me-2"></i> <?php echo htmlspecialchars($nombreUsuario); ?>
                 </button>
                 <ul class="dropdown-menu p-3 shadow" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="EditarPerfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
                     <li><a class="dropdown-item" href="../controllers/logout.php"><i class="fas fa-power-off me-2"></i>Salir</a></li>
-                    </ul>
+                </ul>
             </li>
         </ul>
     </nav>
-    </body>
-    </html>
+</body>
+</html>

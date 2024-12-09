@@ -40,6 +40,19 @@ include '../includes/sidebar.php';
                                 <div class="card-body">
                                     <div class="form-container">
                                         <!-- Column 1 -->
+
+                                        <div class="profile-picture">
+                                            <img src=  "../avatares/usuario.png" alt="Foto de perfil"
+                                                id="profile-img"><br>
+                                            <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar
+                                                Foto</button>
+                                            <input type="file" id="upload-photo" accept="image/*"
+                                                onchange="updateProfileImage(event)">
+                                                
+
+
+                                        </div>
+
                                         <div class="form-column">
                                             <div class="form-group">
                                                 <label for="nombre">Nombre</label>
@@ -64,7 +77,13 @@ include '../includes/sidebar.php';
                                             <div class="form-group">
                                                 <label for="email">Correo Electrónico</label>
                                                 <input type="email" id="email" placeholder="Ingrese su Correo">
-                                            </div>
+                                            </div><br>
+                                            
+                            <div class="d-grid gap-2 d-md-block">
+                                <button class="btn btn-warning" type="button">Actualizar</button>
+                                <button class="btn btn-secondary" type="button">Cancelar</button>
+                            </div>
+
                                         </div>
 
                                         <!-- Column 2 -->
@@ -127,27 +146,11 @@ include '../includes/sidebar.php';
                                                 <label for="password">Contraseña</label>
                                                 <input type="password" id="password" placeholder="Ingrese su contraseña">
                                             </div>
-                                        </div>
-
-                                        <!-- Column 3 -->
-                                        <div class="profile-picture">
-                                            <img src=  "../avatares/usuario.png" alt="Foto de perfil"
-                                                id="profile-img"><br>
-                                            <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar
-                                                Foto</button>
-                                            <input type="file" id="upload-photo" accept="image/*"
-                                                onchange="updateProfileImage(event)">
-                                        </div>
+                                            
+                                       
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="d-grid gap-2 d-md-block">
-                                <button class="btn btn-warning" type="button">Actualizar</button>
-                                <button class="btn btn-secondary" type="button">Cancelar</button>
-                            </div>
-
-
                         </section>
                     </div>
                 </div>
@@ -160,7 +163,7 @@ include '../includes/sidebar.php';
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="avatarModalLabel">Seleccionar Avatar</h5>
+                    <h5 class="modal-title" id="avatarModalLabel">Selecciona Tu Avatar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -178,11 +181,11 @@ include '../includes/sidebar.php';
                                 onclick="selectAvatar(this.src)">
                         </div>
                         <div class="col-4 mb-3">
-                            <img src="../avatares/jugador.png" class="img-thumbnail avatar-option"
+                            <img src="../avatares/hombre rubio.png" class="img-thumbnail avatar-option"
                                 onclick="selectAvatar(this.src)">
                         </div>
                         <div class="col-4 mb-3">
-                            <img src="../avatares/hombre rubio.png" class="img-thumbnail avatar-option"
+                            <img src="../avatares/hombre amarillo.png" class="img-thumbnail avatar-option"
                                 onclick="selectAvatar(this.src)">
                         </div>
                         <div class="col-4 mb-3">
@@ -197,6 +200,10 @@ include '../includes/sidebar.php';
                             <img src="../avatares/mujer.png" class="img-thumbnail avatar-option"
                                 onclick="selectAvatar(this.src)">
                         </div>
+                        <div class="col-4 mb-3">
+                            <img src="../avatares/mujer amarilla.png" class="img-thumbnail avatar-option"
+                                onclick="selectAvatar(this.src)">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -207,8 +214,6 @@ include '../includes/sidebar.php';
             </div>
         </div>
     </div>
-
-  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function openAvatarModal() {

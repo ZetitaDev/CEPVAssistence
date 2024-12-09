@@ -40,6 +40,7 @@ include '../includes/sidebar.php';
                                 <div class="card-body">
                                     <div class="form-container">
                                         <!-- Column 1 -->
+                                         <form>
 
                                         <div class="form-column">
                                             <div class="form-group">
@@ -149,6 +150,7 @@ include '../includes/sidebar.php';
                                         
                                 </div>
                             </div>
+                            </form>
                         </section>
                     </div>
                 </div>

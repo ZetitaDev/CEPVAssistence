@@ -160,7 +160,7 @@
                                             </tr>
                                             <tr class="expandable-body">
                                                 <td colspan="5">
-                                                    <button class="btn btn-warning">Editar Estudiante</button>
+                                                    <button href=" views/EditarEstudiante.php" class="btn btn-warning">Editar Estudiante</button>
                                                     <button class="btn btn-danger">Eliminar Estudiante</button>
                                                 </td>
                                             </tr>

@@ -117,6 +117,7 @@
                                 <div class="card-body">
                                     <div class="form-container">
                                         <!-- Column 1 -->
+
                                         <div class="form-column">
                                             <div class="form-group">
                                                 <label for="nombre">Nombre</label>
@@ -173,8 +174,18 @@
                                                 <input type="text" id="telefono" placeholder="Ingrese el curso del/la Estudiante">
                                             </div>
 
-
+                                           
                                         </div>
+
+                                        <div class="profile-picture">
+    <img src="../avatares/usuario.png" alt="Foto de perfil" id="profile-img"><br>
+    <!-- Botón Cambiar Foto -->
+    <button class="btn btn-primary mt-2" onclick="document.getElementById('upload-photo').click()">Cambiar Foto</button>
+    <!-- Campo oculto para subir archivos -->
+    <input type="file" id="upload-photo" accept="image/*" onchange="updateProfileImage(event)" style="display: none;">
+    <!-- Botón Eliminar Foto de Perfil -->
+    <button class="btn btn-danger mt-2" onclick="removeProfileImage()">Eliminar Foto de Perfil</button>
+</div>
                                     </div>
                                 </div>
 
@@ -190,7 +201,7 @@
                     <!-- /.row -->
                 </div>
                
-            </section>
+            </section>            
             <!-- /.content -->
         </div>
         <?php
@@ -200,6 +211,7 @@
         <!-- /.content-wrapper -->
     </div>
 
+    
 
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>

@@ -66,6 +66,7 @@
                                                 <th>Hora de entrada</th>
                                                 <th>Estado</th>
                                                 <th>Curso</th>
+                                                <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -76,12 +77,7 @@
                                                 <td>Presente</td>
                                                 <td>5to E Informatica.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
+            
 
                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                 <td>219</td>
@@ -90,12 +86,7 @@
                                                 <td>Excusa</td>
                                                 <td>4to E informatica.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Cerrar caja</button>
-                                                </td>
-                                            </tr>
+                        
 
                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                 <td>657</td>
@@ -104,12 +95,7 @@
                                                 <td>Presente</td>
                                                 <td>6to A Enfermeria.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn  `1 btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
+                                    
 
                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                 <td>175</td>
@@ -118,12 +104,7 @@
                                                 <td>Ausente</td>
                                                 <td>5to C Comercio y Mercadeo.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
+                                  
 
                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                 <td>134</td>
@@ -132,13 +113,7 @@
                                                 <td>Presente</td>
                                                 <td>4to E Informatica.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-
+                                         
                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                 <td>494</td>
                                                 <td>Victoria Doe</td>
@@ -146,12 +121,7 @@
                                                 <td>Excusa</td>
                                                 <td>4to B Comercio y Mercadeo.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
+                                  
 
                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                 <td>832</td>
@@ -160,12 +130,7 @@
                                                 <td>Presente</td>
                                                 <td>6to D Tributaria.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
+                                     
 
                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                 <td>982</td>
@@ -174,12 +139,7 @@
                                                 <td>Ausente</td>
                                                 <td>4to D Tributaria.</td>
                                             </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
+                                           
                                         </tbody>
                                     </table>
                                 </div>

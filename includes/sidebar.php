@@ -36,7 +36,7 @@ if(!isset($_SESSION['username'])) {
     </a>
     <dl class="collapse" id="submenu-estudiantes">
         <li class="nav-item">
-        <a href="AgregarEstudiantes.php" class="nav-link">
+        <a href="../views/AgregarEstudiante.php" class="nav-link">
               <i class="fas fa-user-plus nav-icon"></i>
                 <p>Agregar</p>
             </a>

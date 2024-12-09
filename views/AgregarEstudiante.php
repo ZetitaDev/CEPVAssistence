@@ -3,25 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Tema AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
-</head>
-
-
-
-    <title>Dashboard</title>
+    <title>Nuevo Estudiante</title>
     <style>
         .form-container {
             display: flex;
@@ -38,62 +26,35 @@
             text-align: center;
         }
 
-            .profile-picture img {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                object-fit: cover;
-                margin-bottom: 10px;
-            }
-
-            .profile-picture input[type="file"] {
-                display: block;
-                margin: 10px auto;
-            }
+        .profile-picture img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
 
         .form-group {
             margin-bottom: 15px;
         }
 
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-
-            .form-group input, .form-group select {
-                width: 100%;
-                padding: 8px;
-                box-sizing: border-box;
-            }
-
-        .password-container {
-            position: relative;
-            display: inline-block;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
-            .password-container input {
-                padding-right: 30px;
-            }
-
-        .toggle-password {
-            position: absolute;
-            top: 70%;
-            right: 5px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 16px;
-            color: #000000;
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
         }
-
     </style>
-
-
+</head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-    <?php
-        include '../includes/sidebar.php';
-        ?>
+        <?php include '../includes/sidebar.php'; ?>
+
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <!-- Content Header -->
@@ -102,7 +63,6 @@
                     <h1 class="m-0">Nuevo Estudiante</h1>
                 </div>
             </div>
-            <!-- /.content-header -->
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
@@ -117,7 +77,6 @@
                                 <div class="card-body">
                                     <div class="form-container">
                                         <!-- Column 1 -->
-
                                         <div class="form-column">
                                             <div class="form-group">
                                                 <label for="nombre">Nombre</label>
@@ -174,44 +133,25 @@
                                                 <input type="text" id="telefono" placeholder="Ingrese el curso del/la Estudiante">
                                             </div>
 
-                                           
-                                        </div>
 
-                                        <div class="profile-picture">
-    <img src="../avatares/usuario.png" alt="Foto de perfil" id="profile-img"><br>
-    <!-- Botón Cambiar Foto -->
-    <button class="btn btn-primary mt-2" onclick="document.getElementById('upload-photo').click()">Cambiar Foto</button>
-    <!-- Campo oculto para subir archivos -->
-    <input type="file" id="upload-photo" accept="image/*" onchange="updateProfileImage(event)" style="display: none;">
-    <!-- Botón Eliminar Foto de Perfil -->
-    <button class="btn btn-danger mt-2" onclick="removeProfileImage()">Eliminar Foto de Perfil</button>
-</div>
+                                        </div>
                                     </div>
                                 </div>
-
-
-                               
-                               
-                            </div>
-                            <div class="form-group mx-auto p-2" style="width: 200px;">
-                                <input type="submit" class="btn btn-primary"></input>
-                            </div>
-                        </section>
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary">Registrar Estudiante</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <!-- /.row -->
                 </div>
                
-            </section>            
+            </section>
             <!-- /.content -->
         </div>
-        <?php
-        include '../includes/footer.php';
-        ?>
-     
-        <!-- /.content-wrapper -->
+
+        <?php include '../includes/footer.php'; ?>
     </div>
 
-    
 
     <!-- jQuery -->
     <script src="../../plugins/jquery/jquery.min.js"></script>
@@ -248,25 +188,18 @@
                 toggleIcon.classList.remove('fa-eye');
                 toggleIcon.classList.add('fa-eye-slash');
             } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
+                echo "<script>alert('Error al registrar al estudiante: " . $stmt->error . "');</script>";
             }
+            $stmt->close();
+        } else {
+            echo "<script>alert('Error en la consulta SQL: " . $conn->error . "');</script>";
         }
-    </script>
+    } else {
+        echo "<script>alert('Error al subir la foto');</script>";
+    }
 
-
-    <!-- Busqueda  en vivo de los paises para el campo input "nacionalidad"-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#nacionalidad').select2({
-                placeholder: "Seleccione su nacionalidad",
-                allowClear: true
-            });
-        });
-    </script>
-
+    $conn->close();
+}
+?>
 </body>
 </html>

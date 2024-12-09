@@ -120,6 +120,7 @@ session_start();
                                     <h3 class="card-title"><i class="fas fa-user-plus nav-icon"></i> Agrega un nuevo Usuario</h3>
                                 </div>
                                 <div class="card-body">
+                                    <form>
                                     <div class="form-container">
                                         <!-- Column 1 -->
                                         <div class="form-column">
@@ -186,6 +187,7 @@ session_start();
                             <div class="form-group mx-auto p-2" style="width: 200px;">
                                 <input type="submit" class="btn btn-primary"></input>
                             </div>
+                            </form>
                         </section>
                     </div>
                     <!-- /.row -->

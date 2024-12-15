@@ -10,64 +10,33 @@
     <!-- Tema AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
     <title>Nuevo Estudiante</title>
-    <style>
-        .form-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .form-column {
-            flex: 1;
-        }
-
-        .profile-picture {
-            text-align: center;
-        }
-
-        .profile-picture img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-    </style>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <?php include '../includes/sidebar.php'; ?>
+        <?php 
+        include '../includes/sidebar.php'; 
+
+        // Consulta para obtener todos los cursos concatenando curso y nivel
+        $cursos = [];
+        $sql = "SELECT id, CONCAT(curso, ' - ', nivel) AS curso_nivel FROM cursos";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $cursos[] = $row;
+            }
+        }
+        ?>
 
         <!-- Content Wrapper -->
         <div class="content-wrapper">
-            <!-- Content Header -->
             <div class="content-header">
                 <div class="container-fluid">
                     <h1 class="m-0">Nuevo Estudiante</h1>
                 </div>
             </div>
-            <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-
-                    <!-- Main row -->
                     <div class="row">
                         <section class="col-lg-12 connectedSortable">
                             <div class="card">
@@ -75,131 +44,102 @@
                                     <h3 class="card-title"><i class="fas fa-graduation-cap nav-icon"></i> Agrega un nuevo Estudiante</h3>
                                 </div>
                                 <div class="card-body">
-                                    <div class="form-container">
-                                        <!-- Column 1 -->
-                                        <div class="form-column">
-                                            <div class="form-group">
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" id="nombre" placeholder="Ingrese el nombre del/la Estudiante">
+                                    <form action="" method="post">
+                                        <div class="form-container d-flex gap-4">
+                                            <!-- Column 1 -->
+                                            <div class="form-column w-50">
+                                                <div class="form-group">
+                                                    <label for="id">ID</label>
+                                                    <input type="number" id="id" name="id" class="form-control" required placeholder="Ingrese el ID del estudiante">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="nombre">Nombre</label>
+                                                    <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Ingrese el nombre">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="apellido">Apellido</label>
+                                                    <input type="text" id="apellido" name="apellido" class="form-control" required placeholder="Ingrese el apellido">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                                                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" required>
+                                                </div>
                                             </div>
 
-                                            <div class="form-group">
-                                                <label for="sexo">Sexo</label>
-                                                <select id="sexo">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="masculino">Masculino</option>
-                                                    <option value="femenino">Femenino</option>
-                                                </select>
+                                            <!-- Column 2 -->
+                                            <div class="form-column w-50">
+                                                <div class="form-group">
+                                                    <label for="fecha_ingreso">Fecha de Ingreso</label>
+                                                    <input type="date" id="fecha_ingreso" name="fecha_ingreso" class="form-control" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="sexo">Sexo</label>
+                                                    <select id="sexo" name="sexo" class="form-control" required>
+                                                        <option value="">Seleccione</option>
+                                                        <option value="M">Masculino</option>
+                                                        <option value="F">Femenino</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="telefono">Teléfono</label>
+                                                    <input type="text" id="telefono" name="telefono" class="form-control" required placeholder="Ingrese el teléfono">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="numero_tutor">Número de Tutor</label>
+                                                    <input type="text" id="numero_tutor" name="numero_tutor" class="form-control" required placeholder="Ingrese el número del tutor">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="curso_id">Curso</label>
+                                                    <select id="curso_id" name="curso_id" class="form-control" required>
+                                                        <option value="">Seleccione un curso</option>
+                                                        <?php foreach ($cursos as $curso): ?>
+                                                            <option value="<?php echo $curso['id']; ?>">
+                                                                <?php echo $curso['curso_nivel']; ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
                                             </div>
-
-                                            <div class="form-group">
-                                                <label for="nacimiento">Fecha de Ingreso</label>
-                                                <input type="date" id="nacimiento" placeholder="Ingrese la fecha de ingreso del/la Estudiante">
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label for="sexo">Estado</label>
-                                                <select id="sexo">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="masculino">Activo</option>
-                                                    <option value="femenino">Retirado</option>
-                                                </select>
-                                            </div>
-
                                         </div>
-
-
-                                        <!-- Column 2 -->
-                                        <div class="form-column">
-                                            <div class="form-group">
-                                                <label for="apellido">Apellido</label>
-                                                <input type="text" id="apellido" placeholder="Ingrese el apellido del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="nacimiento">Fecha de Nacimiento</label>
-                                                <input type="date" id="nacimiento" placeholder="Ingrese la Fecha de Nacimiento del/la Estudiante">
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label for="telefono">Teléfono</label>
-                                                <input type="text" id="telefono" placeholder="Ingrese el teléfono del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="telefono">Curso</label>
-                                                <input type="text" id="telefono" placeholder="Ingrese el curso del/la Estudiante">
-                                            </div>
-
-
+                                        <div class="text-center mt-4">
+                                            <button type="submit" name="submit" class="btn btn-primary">Registrar Estudiante</button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-primary">Registrar Estudiante</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
-               
             </section>
-            <!-- /.content -->
         </div>
 
         <?php include '../includes/footer.php'; ?>
     </div>
-
-
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
-
-
-    <!--  Visualizacion de la imagen en tiempo real con javascript-->
-    <script>
-        function updateProfileImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('profile-img').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
-
-    <!-- Funcion para ver y ocultar
-    El campo contraseña se alterna de tipo "password" a tipo "text" -->
-
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.querySelector('.toggle-password');
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                echo "<script>alert('Error al registrar al estudiante: " . $stmt->error . "');</script>";
-            }
-            $stmt->close();
-        } else {
-            echo "<script>alert('Error en la consulta SQL: " . $conn->error . "');</script>";
-        }
-    } else {
-        echo "<script>alert('Error al subir la foto');</script>";
-    }
-
-    $conn->close();
-}
-?>
 </body>
 </html>
+
+<?php
+if (isset($_POST['submit'])) {
+    $id = $_POST['id'];
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $fecha_ingreso = $_POST['fecha_ingreso'];
+    $sexo = $_POST['sexo'];
+    $telefono = $_POST['telefono'];
+    $numero_tutor = $_POST['numero_tutor'];
+    $curso_id = $_POST['curso_id'];
+
+    $sql = "INSERT INTO estudiantes (id, nombre, apellido, fecha_nacimiento, fecha_ingreso, sexo, telefono, numero_tutor, curso_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssssisi", $id, $nombre, $apellido, $fecha_nacimiento, $fecha_ingreso, $sexo, $telefono, $numero_tutor, $curso_id);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Estudiante registrado correctamente');</script>";
+    } else {
+        echo "<script>alert('Error al registrar el estudiante: " . $stmt->error . "');</script>";
+    }
+    $stmt->close();
+}
+?>

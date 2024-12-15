@@ -33,11 +33,13 @@
     <div class="row">
       <div class="col-md-6 offset-md-9" style="margin-top: -55px; margin-bottom: 5px;">
         <label for="selectBox" class="form-label " style="margin-bottom: -15px;">Selecciona el curso:</label>
-        <select id="selectBox" class="form-select w-50" style="margin-bottom: 15px;">
-          <option value="" selected disabled>Elige un curso</option>
-          <option value="1">Opción 1</option>
-          <option value="2">Opción 2</option>
-          <option value="3">Opción 3</option>
+        <select id="courseSelect" class="form-select">
+    <option value="" selected disabled>Elige un curso</option>
+    <option value="preprimario_a">Preprimario A</option>
+    <option value="preprimario_b">Preprimario B</option>
+    <!-- Agrega más cursos aquí -->
+</select>
+
         </select>
       </div>
     </div>

@@ -35,7 +35,6 @@ if ($result->num_rows > 0) {
 }
 
 $stmt->close();
-$conn->close();
 ?>
 
 <?php if (!isset($hideSidebar) || !$hideSidebar): ?>

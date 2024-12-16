@@ -4,7 +4,6 @@ session_start(); // Iniciar sesión
 // Si ya hay una sesión activa, redirigir al dashboard
 if (isset($_SESSION['username'])) {
     header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
-    header("Location: dashboard.php");
     exit();
 }
 
@@ -24,27 +23,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Consulta para verificar las credenciales
-    $sql = "SELECT * FROM usuarios WHERE correo = ? AND password = ?";
+    // Consulta para obtener los datos del usuario por correo
+    $sql = "SELECT * FROM usuarios WHERE correo = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ss', $username, $password);
+    $stmt->bind_param('s', $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Verificar si el usuario existe
     if ($result->num_rows > 0) {
-        // Credenciales correctas
         $user = $result->fetch_assoc(); // Obtener los datos del usuario
 
-        // Guardar los datos en la sesión
-        $_SESSION['username'] = $user['correo']; // Guardar el correo en la sesión
-        $_SESSION['role'] = $user['rol']; // Guardar el rol en la sesión
+        // Verificar si la contraseña ingresada coincide con el hash almacenado
+        if (password_verify($password, $user['password'])) {
+            // Credenciales correctas, guardar datos en la sesión
+            $_SESSION['username'] = $user['correo']; // Guardar el correo en la sesión
+            $_SESSION['role'] = $user['rol']; // Guardar el rol en la sesión
 
-        // Redirigir al dashboard.php
-        header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
-        header("Location: dashboard.php");
-        exit();
+            // Redirigir al dashboard.php
+            header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
+            exit();
+        } else {
+            // Si la contraseña no coincide
+            $error_message = "Credenciales incorrectas. Inténtalo de nuevo.";
+        }
     } else {
-        // Credenciales incorrectas
+        // Si el usuario no existe
         $error_message = "Credenciales incorrectas. Inténtalo de nuevo.";
     }
 
@@ -61,19 +65,15 @@ $conn->close();
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Iniciar Sesión</title>
-    <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- icheck bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
-    <!-- Theme style -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="../css/stylelogin.css">
 </head>
 <body class="hold-transition login-page">
     <div class="image-container">
-        <img src="../css/logocepva.png" alt="Logo" class="login-image"> <!-- Imagen encima del login -->
+        <img src="../css/logocepva.png" alt="Logo" class="login-image">
     </div>
 
     <div class="login-box">
@@ -109,7 +109,6 @@ $conn->close();
         </div>
     </div>
 
-    <!-- Fondo oscuro para el efecto flotante (opcional) -->
     <?php if (!empty($error_message)): ?>
         <div class="overlay"></div>
         <div class="error-message" id="errorMessage">
@@ -118,7 +117,6 @@ $conn->close();
         </div>
     <?php endif; ?>
 
-    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>

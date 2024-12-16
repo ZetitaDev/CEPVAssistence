@@ -156,7 +156,11 @@
                                                     <div class="password-container">
                                                         <i class="toggle-password fas fa-eye" onclick="togglePassword('password')"></i>
                                                         <input type="password" id="password" name="password" class="form-control" placeholder="Ingrese la nueva contraseña" required>
-                                                    </div>
+                                                    </div><br>
+                                                    <div class="form-group">
+                                                    <label for="password_strength">Nivel de Dificultad</label>
+                                                    <input type="text" id="password_strength" class="form-control" disabled>
+                                                </div>
                                                     <div id="strength-bar" class="strength-bar"></div>
                                                 </div>
                                                 <div class="form-group">
@@ -166,10 +170,7 @@
                                                         <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirme la contraseña" required>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="password_strength">Nivel de Dificultad</label>
-                                                    <input type="text" id="password_strength" class="form-control" disabled>
-                                                </div>
+                                               
                                             </div>
                                             <!-- Columna 2 -->
                                             <div class="form-column">

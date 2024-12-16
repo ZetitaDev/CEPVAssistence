@@ -1,4 +1,18 @@
+<?php
+// Incluir el archivo de conexión a la base de datos
+include '../includes/sidebar.php';
 
+// Suponemos que el correo del usuario está almacenado en la sesión
+$correo = $_SESSION['username'];
+
+// Consultar los datos del usuario usando el correo
+$query = "SELECT nombre, apellido, sexo, correo, telefono, fecha_nacimiento, foto_perfil FROM usuarios WHERE correo = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $correo); // 's' para indicar que es un string
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -38,22 +52,6 @@
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-
-    <?php
-// Incluir el archivo de conexión a la base de datos
-include '../includes/sidebar.php';
-
-// Suponemos que el correo del usuario está almacenado en la sesión
-$correo = $_SESSION['username'];
-
-// Consultar los datos del usuario usando el correo
-$query = "SELECT nombre, apellido, sexo, correo, telefono, fecha_nacimiento, foto_perfil FROM usuarios WHERE correo = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("s", $correo); // 's' para indicar que es un string
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-?>
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <!-- Content Header -->
@@ -89,8 +87,10 @@ $user = $result->fetch_assoc();
                                                 <label for="correo">Correo Electrónico</label>
                                                 <input type="email" id="correo" value="<?php echo htmlspecialchars($user['correo']); ?>" placeholder="Ingrese su Correo" readonly>
                                             </div>
-
-                                        
+                                            <div class="form-group">
+                                                <button class="btn btn-warning" onclick="openPasswordModal()">Cambiar Contraseña</button>
+                                            </div>
+                                        </div>
 
                                         <div class="form-column">
                                             <div class="form-group">

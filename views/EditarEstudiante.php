@@ -1,262 +1,100 @@
+<?php
+include '../includes/sidebar.php'; // Conexión a la base de datos
+
+// Verificar que se ha proporcionado un ID válido
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    die('ID de estudiante no proporcionado');
+}
+
+$id = $_GET['id'];
+
+// Obtener datos del estudiante con el ID proporcionado
+$sql = "SELECT nombre, apellido, fecha_nacimiento, telefono, numero_tutor FROM estudiantes WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Verificar si el estudiante existe
+if ($result->num_rows === 0) {
+    die('Estudiante no encontrado');
+}
+
+$estudiante = $result->fetch_assoc();
+
+// Verificar si el formulario se ha enviado
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los datos enviados desde el formulario
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $telefono = $_POST['telefono'];
+    $numero_tutor = $_POST['numero_tutor'];
+
+    // Validar los datos antes de actualizar
+    if (!empty($nombre) && !empty($apellido) && !empty($fecha_nacimiento) && !empty($telefono)) {
+        // Actualizar los datos del estudiante
+        $sql_update = "UPDATE estudiantes SET nombre = ?, apellido = ?, fecha_nacimiento = ?, telefono = ?, numero_tutor = ? WHERE id = ?";
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param('sssssi', $nombre, $apellido, $fecha_nacimiento, $telefono, $numero_tutor, $id);
+
+        if ($stmt_update->execute()) {
+            echo "Estudiante actualizado correctamente. Redirigiendo...";
+            echo "<script>setTimeout(() => { window.location.href = 'VerEstudiantes.php?mensaje=editado'; }, 1000);</script>";
+        } else {
+            $error = 'Error al actualizar el estudiante: ' . $conn->error;
+        }
+    } else {
+        $error = 'Todos los campos son obligatorios.';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Tema AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
 </head>
-
-
-
-    <title>Dashboard</title>
-    <style>
-        .form-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .form-column {
-            flex: 1;
-        }
-
-        .profile-picture {
-            text-align: center;
-        }
-
-            .profile-picture img {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                object-fit: cover;
-                margin-bottom: 10px;
-            }
-
-            .profile-picture input[type="file"] {
-                display: block;
-                margin: 10px auto;
-            }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-            .form-group label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-            }
-
-            .form-group input, .form-group select {
-                width: 100%;
-                padding: 8px;
-                box-sizing: border-box;
-            }
-
-        .password-container {
-            position: relative;
-            display: inline-block;
-        }
-
-            .password-container input {
-                padding-right: 30px;
-            }
-
-        .toggle-password {
-            position: absolute;
-            top: 70%;
-            right: 5px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 16px;
-            color: #000000;
-        }
-
-    </style>
-
-
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-    <?php
-        include '../includes/sidebar.php';
-        ?>
-        <!-- Content Wrapper -->
         <div class="content-wrapper">
-            <!-- Content Header -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <h1 class="m-0">Nuevo Estudiante</h1>
-                </div>
-            </div>
-            <!-- /.content-header -->
-            <!-- Main content -->
             <section class="content">
-                <div class="container-fluid">
-
-                    <!-- Main row -->
-                    <div class="row">
-                        <section class="col-lg-12 connectedSortable">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"><i class="fas fa-graduation-cap nav-icon"></i> Agrega un nuevo Estudiante</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-container">
-                                        <!-- Column 1 -->
-                                        <div class="form-column">
-                                            <div class="form-group">
-                                                <form>
-                                                <label for="nombre">Nombre</label>
-                                                <input type="text" id="nombre" placeholder="Ingrese el nombre del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="sexo">Sexo</label>
-                                                <select id="sexo">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="masculino">Masculino</option>
-                                                    <option value="femenino">Femenino</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="nacimiento">Fecha de Ingreso</label>
-                                                <input type="date" id="nacimiento" placeholder="Ingrese la fecha de ingreso del/la Estudiante">
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label for="sexo">Estado</label>
-                                                <select id="sexo">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="masculino">Activo</option>
-                                                    <option value="femenino">Retirado</option>
-                                                </select>
-                                            </div>
-
-                                        </div>
-
-
-                                        <!-- Column 2 -->
-                                        <div class="form-column">
-                                            <div class="form-group">
-                                                <label for="apellido">Apellido</label>
-                                                <input type="text" id="apellido" placeholder="Ingrese el apellido del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="nacimiento">Fecha de Nacimiento</label>
-                                                <input type="date" id="nacimiento" placeholder="Ingrese la Fecha de Nacimiento del/la Estudiante">
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label for="telefono">Teléfono</label>
-                                                <input type="text" id="telefono" placeholder="Ingrese el teléfono del/la Estudiante">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="telefono">Curso</label>
-                                                <input type="text" id="telefono" placeholder="Ingrese el curso del/la Estudiante">
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                               
-                               
-                            </div>
-                            <div class="form-group mx-auto p-2" style="width: 200px;">
-                                <input type="submit" class="btn btn-primary">
-                            </div>
-                            </form>
-                        </section>
-                    </div>
-                    <!-- /.row -->
+                <h1>Editar Estudiante</h1>
+                <div class="container">
+                    <?php if (isset($error)): ?>
+                        <div class="alert alert-danger"><?php echo $error; ?></div>
+                    <?php endif; ?>
+                    <form method="POST" action="">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo htmlspecialchars($estudiante['nombre']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo htmlspecialchars($estudiante['apellido']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="<?php echo htmlspecialchars($estudiante['fecha_nacimiento']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo htmlspecialchars($estudiante['telefono']); ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="numero_tutor">Teléfono del Tutor</label>
+                            <input type="text" class="form-control" id="numero_tutor" name="numero_tutor" value="<?php echo htmlspecialchars($estudiante['numero_tutor']); ?>">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <a href="ListaEstudiantes.php" class="btn btn-secondary">Cancelar</a>
+                    </form>
                 </div>
-               
             </section>
-            <!-- /.content -->
         </div>
-        <?php
-        include '../includes/footer.php';
-        ?>
-     
-        <!-- /.content-wrapper -->
+        <?php include '../includes/footer.php'; ?>
     </div>
-
-
-    <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
-
-
-    <!--  Visualizacion de la imagen en tiempo real con javascript-->
-    <script>
-        function updateProfileImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('profile-img').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
-
-    <!-- Funcion para ver y ocultar
-    El campo contraseña se alterna de tipo "password" a tipo "text" -->
-
-    <script>
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.querySelector('.toggle-password');
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
-            }
-        }
-    </script>
-
-
-    <!-- Busqueda  en vivo de los paises para el campo input "nacionalidad"-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#nacionalidad').select2({
-                placeholder: "Seleccione su nacionalidad",
-                allowClear: true
-            });
-        });
-    </script>
-
 </body>
 </html>

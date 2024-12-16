@@ -59,13 +59,13 @@ $stmt->close();
                     </a>
                     <dl class="collapse" id="submenu-asistencia">
                         <li class="nav-item">
-                            <a href="../views/VerAsistencia.php" class="nav-link">
+                            <a href="../views/VerAsistencia_maestro.php" class="nav-link">
                                 <i class="fas fa-user-plus nav-icon"></i>
                                 <p>Ver Asistencia</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="PasarAsistencia.php" class="nav-link">
+                            <a href="PasarAsistencia_maestro.php" class="nav-link">
                                 <i class="fas fa-search nav-icon"></i>
                                 <p>Pasar Asistencia</p>
                             </a>
@@ -81,7 +81,7 @@ $stmt->close();
                     </li>
 
                     <li class="nav-item">
-                        <a href="VerDocentes.php" class="nav-link">
+                        <a href="VerDocentes_maestro.php" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Docente</p>
                         </a>
@@ -89,7 +89,7 @@ $stmt->close();
 
 
                     <li class="nav-item">
-                        <a href="Aulas.php" class="nav-link">
+                        <a href="Aulas_maestro.php" class="nav-link">
                             <i class="fa-solid fa-school"></i>
                             <p>Aulas</p>
                         </a>

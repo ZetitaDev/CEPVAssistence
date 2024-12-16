@@ -29,11 +29,6 @@ if (isset($_GET['curso_id'])) {
             echo '<td>' . $row['fecha_nacimiento'] . '</td>';
             echo '<td>' . $row['telefono'] . '</td>';
             echo '<td>' . $row['numero_tutor'] . '</td>';
-            echo '<td>';
-            echo '<a href="VerEstudiante.php?id=' . $row['id'] . '" class="btn btn-sm btn-info"><i class="fas fa-eye"></i> Ver</a>';
-            echo ' <a href="EditarEstudiante.php?id=' . $row['id'] . '" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i> Editar</a>';
-            echo ' <button onclick="eliminarEstudiante(' . $row['id'] . ')" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Eliminar</button>';
-            echo '</td>';
             echo '</tr>';
         }
     } else {

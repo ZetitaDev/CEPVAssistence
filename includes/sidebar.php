@@ -71,6 +71,7 @@ $stmt->close();
                             </a>
                         </li>
                     </dl>
+</dl>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#submenu-estudiantes"
                             aria-expanded="false">

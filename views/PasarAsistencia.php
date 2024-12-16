@@ -1,6 +1,31 @@
 <?php
 include '../includes/sidebar.php';
 
+// Verificar si se ha enviado el formulario
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['curso_id']) && isset($_POST['estado']) && isset($_POST['comentario'])) {
+    $curso_id = $_POST['curso_id'];
+    $estado = $_POST['estado'];
+    $comentario = $_POST['comentario'];
+    $fecha = date('Y-m-d'); // Fecha actual
+
+    // Recorrer los estudiantes y guardar la asistencia
+    foreach ($estado as $estudiante_id => $estado_value) {
+        $comentario_value = isset($comentario[$estudiante_id]) ? $comentario[$estudiante_id] : null;
+
+        // Consulta para insertar la asistencia
+        $sql = "INSERT INTO asistencia (estudiante_id, curso_id, fecha, estado, comentario) 
+                VALUES (?, ?, ?, ?, ?)";
+
+        // Preparar y ejecutar la consulta
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iisss", $estudiante_id, $curso_id, $fecha, $estado_value, $comentario_value);
+        $stmt->execute();
+    }
+
+    // Redirigir o mostrar mensaje de éxito
+    echo '<script>alert("Asistencia guardada correctamente.");</script>';
+}
+
 // Obtener todos los cursos para el selector
 $cursos = [];
 $queryCursos = "SELECT id, CONCAT(curso, ' - ', nivel) AS curso_nivel FROM cursos";
@@ -11,7 +36,6 @@ if ($result->num_rows > 0) {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -70,7 +94,7 @@ $(document).ready(function () {
         if (cursoId) {
             // Hacer la solicitud AJAX a `getStudentsAsistencia.php`
             $.ajax({
-                url: 'getStudentsAsistencia.php?curso_id=' + cursoId,
+                url: '../ajax/getStudentsAsistencia.php?curso_id=' + cursoId,
                 method: 'GET',
                 success: function (response) {
                     $('#studentsTable tbody').html(response);

@@ -24,6 +24,7 @@ if (isset($_GET['curso_id']) && is_numeric($_GET['curso_id'])) {
                     <td>{$row['nombre']} {$row['apellido']}</td>
                     <td>
                         <select name='estado[{$row['id']}]' class='form-select' required>
+                            <option value='' selected disabled>Estado</option>
                             <option value='presente'>Presente</option>
                             <option value='ausente'>Ausente</option>
                             <option value='tardanza'>Tardanza</option>

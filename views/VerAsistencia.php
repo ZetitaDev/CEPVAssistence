@@ -1,276 +1,104 @@
+<?php
+include '../includes/sidebar.php';
+
+// Obtener todos los cursos para el selector
+$cursos = [];
+$queryCursos = "SELECT id, CONCAT(curso, ' - ', nivel) AS curso_nivel FROM cursos";
+$result = $conn->query($queryCursos);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $cursos[] = $row;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Asistencia</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Tema AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
 
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
 </head>
-
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <?php
-        include '../includes/sidebar.php';
-        ?>
-        <!-- Content Wrapper. Contains page content -->
+        <!-- Content Wrapper -->
         <div class="content-wrapper">
-            <!-- Main content -->
-            <section class="content"><div class="container">
-                <h1>Asistencia de alumnos - <a class="btn btn-info">Presentar Asistencia</a></h1>        
-    <div class="row">
-      <div class="col-md-6 offset-md-9" style="margin-top: -55px; margin-bottom: 5px;">
-        <label for="selectBox" class="form-label " style="margin-bottom: -15px;">Selecciona el curso:</label>
-        <select id="courseSelect" class="form-select">
-    <option value="" selected disabled>Elige un curso</option>
-    <option value="preprimario_a">Preprimario A</option>
-    <option value="preprimario_b">Preprimario B</option>
-    <!-- Agrega más cursos aquí -->
-</select>
+            <div class="container mt-5">
+                <h1 class="text-center">Consulta de Asistencia</h1>
+                
+                <div class="mb-4">
+                    <label for="curso_id" class="form-label">Selecciona el Curso:</label>
+                    <select id="curso_id" name="curso_id" class="form-select" required>
+                        <option value="" selected disabled>Seleccione un curso</option>
+                        <?php foreach ($cursos as $curso): ?>
+                            <option value="<?= $curso['id']; ?>"><?= $curso['curso_nivel']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-        </select>
-      </div>
-    </div>
-  </div>
+                <div class="mb-4">
+                    <label for="fecha" class="form-label">Selecciona la Fecha:</label>
+                    <input type="date" id="fecha" name="fecha" class="form-control" required>
+                </div>
 
-
-                <div class="container-fluid">
-
-
-                <div class="d-flex justify-content-center align-items-center flex-column" style="margin-left: 55px;">
-  <div class="container">
-    <!-- Primera fila -->
-    <div class="row">
-      <div class="col-lg-3 col-6">
-        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-          <div class="card-body">
-            <p class="card-text text-muted fs-5">Varones</p>
-            <h1 class="fw-bold display-4 mb-0">150</h1>
-          </div>
+                <div id="resultados" class="mt-4">
+                    <!-- Los resultados de la asistencia se cargarán aquí -->
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="col-lg-3 col-6">
-        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-          <div class="card-body">
-            <p class="card-text text-muted fs-5">Hembras</p>
-            <h1 class="fw-bold display-4 mb-0">150</h1>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-6">
-        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-          <div class="card-body">
-            <p class="card-text text-muted fs-5">Total de Presentes</p>
-            <h1 class="fw-bold display-4 mb-0">150</h1>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-6">
-        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-          <div class="card-body">
-            <p class="card-text text-muted fs-5">Total de Ausentes</p>
-            <h1 class="fw-bold display-4 mb-0">150</h1>
-          </div>
-        </div>
-      </div>
+        <?php include '../includes/footer.php'; ?>
     </div>
 
-    <!-- Segunda fila -->
-    <div class="row mt-4">
-      <div class="col-lg-3 col-6 offset-lg-1">
-        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-          <div class="card-body">
-            <p class="card-text text-muted fs-5">Tardanza</p>
-            <h1 class="fw-bold display-4 mb-0">150</h1>
-          </div>
-        </div>
-      </div>
+    <script>
+        $(document).ready(function() {
+            // Función para consultar la asistencia automáticamente
+            function consultarAsistencia() {
+                const cursoId = $('#curso_id').val();
+                const fecha = $('#fecha').val();
+                if (cursoId && fecha) {
+                    // Hacer la solicitud AJAX para obtener la asistencia
+                    $.ajax({
+                        url: '../ajax/consultar_asistencia_ajax.php',
+                        method: 'GET',
+                        data: {
+                            curso_id: cursoId,
+                            fecha: fecha
+                        },
+                        success: function(response) {
+                            // Mostrar los resultados en la página
+                            $('#resultados').html(`
+                                <h3>Asistencia del ${fecha} - Curso: ${$('#curso_id option:selected').text()}</h3>
+                                <table class="table table-bordered mt-3">
+                                    <thead>
+                                        <tr>
+                                            <th>Estudiante</th>
+                                            <th>Estado</th>
+                                            <th>Comentario</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${response}
+                                    </tbody>
+                                </table>
+                            `);
+                        },
+                        error: function() {
+                            alert('Error al cargar los resultados.');
+                        }
+                    });
+                }
+            }
 
-      <div class="col-lg-3 col-6">
-        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-          <div class="card-body">
-            <p class="card-text text-muted fs-5">Excusa Justificada</p>
-            <h1 class="fw-bold display-4 mb-0">150</h1>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-6">
-        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-          <div class="card-body">
-            <p class="card-text text-muted fs-5">Excusa</p>
-            <h1 class="fw-bold display-4 mb-0">150</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-                    <div class="row">
-                        <div class="col-12">
-                            <hr style="background-color: black; height:2%; width: 100%">
-                            <div class="card">
-                                <!-- ./card-header -->
-
-                                <div class="card-body">
-                                    <table class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>•</th>
-                                                <th>Usuario</th>
-                                                <th>Hora de entrada</th>
-                                                <th>Estado</th>
-                                                <th>Curso</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>183</td>
-                                                <td>John Doe</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Presente</td>
-                                                <td>5to E Informatica.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>219</td>
-                                                <td>Alexander Pierce</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Excusa</td>
-                                                <td>4to E informatica.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Cerrar caja</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>657</td>
-                                                <td>Alexander Pierce</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Presente</td>
-                                                <td>6to A Enfermeria.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn  `1 btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>175</td>
-                                                <td>Mike Doe</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Ausente</td>
-                                                <td>5to C Comercio y Mercadeo.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>134</td>
-                                                <td>Jim Doe</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Presente</td>
-                                                <td>4to E Informatica.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>494</td>
-                                                <td>Victoria Doe</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Excusa</td>
-                                                <td>4to B Comercio y Mercadeo.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>832</td>
-                                                <td>Michael Doe</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Presente</td>
-                                                <td>6to D Tributaria.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-
-                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                <td>982</td>
-                                                <td>Rocky Doe</td>
-                                                <td>@DateTime.Now.ToString("D") @DateTime.Now.ToString("T")</td>
-                                                <td>Ausente</td>
-                                                <td>4to D Tributaria.</td>
-                                            </tr>
-                                            <tr class="expandable-body">
-                                                <td colspan="5">
-                                                    <button class="btn btn-primary">Editar Estudiante</button>
-                                                    <button class="btn btn-danger">Eliminar Estudiante</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
-          
-        </div>
-  <?php
-            include '../includes/footer.php';
-            ?>
-
-    </div>
-    <!-- ./wrapper -->
+            // Llamar la función cuando el curso o la fecha cambien
+            $('#curso_id, #fecha').change(function() {
+                consultarAsistencia();
+            });
+        });
+    </script>
 </body>
-
 </html>

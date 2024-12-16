@@ -279,9 +279,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         var strengthText = document.getElementById('password_strength');
 
         // Expresiones regulares para diferentes niveles de fuerza
-        var weak = /^(?=\S)(?!.*\d)(?!.*[!@#$%^&*])[A-Za-z]{1,5}$/;  // Menos de 6 caracteres sin números ni símbolos
-        var medium = /^(?=\S)(?=.*\d)(?=[A-Za-z0-9]{6,8}$)(?!.*[!@#$%^&*])[A-Za-z0-9]*$/;  // 6-8 caracteres con números
-        var strong = /^(?=\S)(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{9,}$/;  // Más de 8 caracteres con números y símbolos
+        var weak = /^(?=\S)(?!.*[!@#$%^&*])(?=.*[a-zA-Z0-9]).{1,5}$/;  // Menos de 6 caracteres sin caracteres especiales
+        var medium = /^(?=\S)(?=.*[A-Za-z])(?=.*\d)[A-Za-z0-9]{6,12}$/;  // 6-12 caracteres, letras y números
+        var strong = /^(?=\S)(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&*!]).{12,}$/;  // Más de 12 caracteres, letras, números y símbolos
 
         // Verificación de la fuerza de la contraseña
         if (strong.test(password)) {
@@ -291,12 +291,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else if (medium.test(password)) {
             strengthBar.classList.add('strength-medium');
             strengthBar.classList.remove('strength-strong', 'strength-weak');
-            strengthText.value = "Medio";
+            strengthText.value = "Media";
         } else if (weak.test(password)) {
             strengthBar.classList.add('strength-weak');
             strengthBar.classList.remove('strength-strong', 'strength-medium');
             strengthText.value = "Débil";
-       
+        } else {
+            strengthBar.classList.remove('strength-strong', 'strength-medium', 'strength-weak');
+            strengthText.value = "Muy débil";
+        }
     });
 </script>
 =======

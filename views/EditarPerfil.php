@@ -1,6 +1,3 @@
-<?php
-include '../includes/sidebar.php';
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -20,6 +17,9 @@ include '../includes/sidebar.php';
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
+    <?php
+include '../includes/sidebar.php';
+?>
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <!-- Content Header -->
@@ -154,6 +154,9 @@ include '../includes/sidebar.php';
                 </div>
             </section>
         </div>
+        <?php
+        include '../includes/footer.php';
+        ?>
     </div>
 
     <!-- Modal para selección de avatares -->
@@ -210,10 +213,17 @@ include '../includes/sidebar.php';
     <button type="button" class="btn btn-danger" onclick="removeProfileImage()">Eliminar Foto de Perfil</button>
 </div>
             </div>
+
         </div>
+     
     </div>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <script>
+
+
         function openAvatarModal() {
             const avatarModal = new bootstrap.Modal(document.getElementById('avatarModal'));
             avatarModal.show();
@@ -245,8 +255,6 @@ include '../includes/sidebar.php';
     profileImg.src = "../avatares/usuario.png"; // Imagen predeterminada
 }
     </script>
-<?php
-        include '../includes/footer.php';
-        ?>
+
 </body>
 </html>

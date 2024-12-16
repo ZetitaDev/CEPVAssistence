@@ -1,152 +1,117 @@
 <?php
 include '../includes/sidebar.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Guardar asistencia en la base de datos
-    $curso_id = intval($_POST['curso_id']);
-    $fecha = date('Y-m-d');
-    $estados = $_POST['estado'] ?? [];
-    $comentarios = $_POST['comentario'] ?? [];
+// Verificar si se ha enviado el formulario
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['curso_id']) && isset($_POST['estado']) && isset($_POST['comentario'])) {
+    $curso_id = $_POST['curso_id'];
+    $estado = $_POST['estado'];
+    $comentario = $_POST['comentario'];
+    $fecha = date('Y-m-d'); // Fecha actual
 
-    foreach ($estados as $estudiante_id => $estado) {
-        $comentario = $comentarios[$estudiante_id] ?? null;
-        $comentario = $conn->real_escape_string($comentario);
+    // Recorrer los estudiantes y guardar la asistencia
+    foreach ($estado as $estudiante_id => $estado_value) {
+        $comentario_value = isset($comentario[$estudiante_id]) ? $comentario[$estudiante_id] : null;
 
-        $query = "INSERT INTO asistencia (estudiante_id, curso_id, fecha, estado, comentario)
-                  VALUES ($estudiante_id, $curso_id, '$fecha', '$estado', '$comentario')";
-        $conn->query($query);
+        // Consulta para insertar la asistencia
+        $sql = "INSERT INTO asistencia (estudiante_id, curso_id, fecha, estado, comentario) 
+                VALUES (?, ?, ?, ?, ?)";
+
+        // Preparar y ejecutar la consulta
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iisss", $estudiante_id, $curso_id, $fecha, $estado_value, $comentario_value);
+        $stmt->execute();
     }
 
-    echo "<script>alert('Asistencia guardada correctamente'); window.location.href='PasarAsistencia.php';</script>";
-    exit;
+    // Redirigir o mostrar mensaje de éxito
+    echo '<script>alert("Asistencia guardada correctamente.");</script>';
 }
 
-// Obtener los cursos para el selector
-$queryCursos = "SELECT id, curso, nivel, seccion FROM cursos";
-$resultCursos = $conn->query($queryCursos);
-
-$cursoSeleccionado = isset($_GET['curso_id']);
-if ($cursoSeleccionado) {
-    $curso_id = intval($_GET['curso_id']);
-
-    // Detalles del curso
-    $queryCurso = "SELECT curso, nivel, seccion FROM cursos WHERE id = $curso_id";
-    $curso = $conn->query($queryCurso)->fetch_assoc();
-
-    // Estudiantes activos del curso
-    $queryEstudiantes = "SELECT id, nombre, apellido FROM estudiantes WHERE curso_id = $curso_id AND estado = 'activo'";
-    $resultEstudiantes = $conn->query($queryEstudiantes);
+// Obtener todos los cursos para el selector
+$cursos = [];
+$queryCursos = "SELECT id, CONCAT(curso, ' - ', nivel) AS curso_nivel FROM cursos";
+$result = $conn->query($queryCursos);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $cursos[] = $row;
+    }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pasar Asistencia</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h2 class="text-center">Pasar Asistencia</h2>
-        <?php if (!$cursoSeleccionado) { ?>
-            <!-- Formulario para seleccionar curso -->
-            <div class="card shadow">
-                <div class="card-body">
-                    <form method="GET" action="PasarAsistencia.php">
-                        <div class="mb-3">
-                            <label for="curso" class="form-label">Seleccione el Curso:</label>
-                            <select name="curso_id" id="curso" class="form-select" required>
-                                <option value="" disabled selected>Seleccione un curso</option>
-                                <?php while ($row = $resultCursos->fetch_assoc()) { ?>
-                                    <option value="<?= $row['id'] ?>">
-                                        <?= $row['curso'] ?> - <?= $row['nivel'] ?> - <?= $row['seccion'] ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Continuar</button>
-                    </form>
-                </div>
-            </div>
-        <?php } else { ?>
-            <!-- Lista de estudiantes -->
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3>Curso: <?= $curso['curso'] ?> - <?= $curso['nivel'] ?> - <?= $curso['seccion'] ?></h3>
-                    <form method="POST" action="PasarAsistencia.php">
-                        <input type="hidden" name="curso_id" value="<?= $curso_id ?>">
-                        <table class="table table-bordered mt-3">
-                            <thead>
-                                <tr>
-                                    <th>Estudiante</th>
-                                    <th>Estado</th>
-                                    <th>Comentario</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php while ($row = $resultEstudiantes->fetch_assoc()) { ?>
-                                    <tr>
-                                        <td><?= $row['nombre'] . ' ' . $row['apellido'] ?></td>
-                                        <td>
-                                            <select name="estado[<?= $row['id'] ?>]" class="form-select" required>
-                                                <option value="presente">Presente</option>
-                                                <option value="ausente">Ausente</option>
-                                                <option value="tardanza">Tardanza</option>
-                                                <option value="justificado">Justificado</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="comentario[<?= $row['id'] ?>]" class="form-control" placeholder="Comentario opcional">
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                        <button type="submit" class="btn btn-success w-100">Guardar Asistencia</button>
-                    </form>
-                </div>
-            </div>
-        <?php } ?>
-    </div>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Tema AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
 
-    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE -->
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
 </head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
 
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <div class="container mt-5">
+                <h1 class="text-center">Pasar Asistencia</h1>
+                <div class="mb-4">
+                    <label for="curso_id" class="form-label">Selecciona el Curso:</label>
+                    <select id="curso_id" name="curso_id" class="form-select" required>
+                        <option value="" selected disabled>Seleccione un curso</option>
+                        <?php foreach ($cursos as $curso): ?>
+                            <option value="<?= $curso['id']; ?>"><?= $curso['curso_nivel']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
-<title>Dashboard</title>
-<body>
-    <?php
-       include '../includes/sidebar.php';
-       ?>
+                <form id="asistenciaForm" method="POST">
+                    <input type="hidden" name="curso_id" id="hidden_curso_id">
+                    <table class="table table-bordered" id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Estado</th>
+                                <th>Comentario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Los estudiantes se cargarán dinámicamente aquí -->
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-success w-100 mt-3" style="display: none;" id="guardarBtn">Guardar Asistencia</button>
+                </form>
+            </div>
+        </div>
+        <?php include '../includes/footer.php'; ?>
+    </div>
+
+    <script>
+$(document).ready(function () {
+    $('#curso_id').change(function () {
+        const cursoId = $(this).val(); // Obtener el ID del curso seleccionado
+        if (cursoId) {
+            // Hacer la solicitud AJAX a `getStudentsAsistencia.php`
+            $.ajax({
+                url: '../ajax/getStudentsAsistencia.php?curso_id=' + cursoId,
+                method: 'GET',
+                success: function (response) {
+                    $('#studentsTable tbody').html(response);
+                    $('#hidden_curso_id').val(cursoId); // Asignar curso al formulario
+                    $('#guardarBtn').show(); // Mostrar botón de guardar
+                },
+                error: function () {
+                    alert('Error al cargar los estudiantes.');
+                }
+            });
+        } else {
+            // Limpiar la tabla si no se selecciona un curso válido
+            $('#studentsTable tbody').html('');
+            $('#guardarBtn').hide();
+        }
+    });
+});
+    </script>
 </body>
-
-<?php
-     include '../includes/footer.php';
-     ?>
-
-
-
-
-
 </html>

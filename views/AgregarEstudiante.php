@@ -64,7 +64,19 @@
                                                     <label for="fecha_nacimiento">Fecha de Nacimiento</label>
                                                     <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control" required>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="curso_id">Curso</label>
+                                                    <select id="curso_id" name="curso_id" class="form-control" required>
+                                                        <option value="" selected disabled>Seleccione un curso</option>
+                                                        <?php foreach ($cursos as $curso): ?>
+                                                            <option value="<?php echo $curso['id']; ?>">
+                                                                <?php echo $curso['curso_nivel']; ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
                                             </div>
+
 
                                             <!-- Column 2 -->
                                             <div class="form-column w-50">
@@ -88,17 +100,7 @@
                                                     <label for="numero_tutor">Número de Tutor</label>
                                                     <input type="text" id="numero_tutor" name="numero_tutor" class="form-control" required placeholder="Ingrese el número del tutor">
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="curso_id">Curso</label>
-                                                    <select id="curso_id" name="curso_id" class="form-control" required>
-                                                        <option value="" selected disabled>Seleccione un curso</option>
-                                                        <?php foreach ($cursos as $curso): ?>
-                                                            <option value="<?php echo $curso['id']; ?>">
-                                                                <?php echo $curso['curso_nivel']; ?>
-                                                            </option>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                         <div class="text-center mt-4">

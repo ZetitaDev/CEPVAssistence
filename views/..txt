@@ -1,0 +1,76 @@
+          <div class="col-md-6">
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  <div class="estadisticas">
+        <div class="row">
+      <div class="col-lg-3 col-6">
+        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+          <div class="card-body">
+            <p class="card-text text-muted fs-5">Varones</p>
+            <h1 class="fw-bold display-4 mb-0">150</h1>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+          <div class="card-body">
+            <p class="card-text text-muted fs-5">Hembras</p>
+            <h1 class="fw-bold display-4 mb-0">150</h1>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+          <div class="card-body">
+            <p class="card-text text-muted fs-5">Total de Presentes</p>
+            <h1 class="fw-bold display-4 mb-0">150</h1>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+          <div class="card-body">
+            <p class="card-text text-muted fs-5">Total de Ausentes</p>
+            <h1 class="fw-bold display-4 mb-0">150</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Segunda fila -->
+    <div class="row mt-4">
+      <div class="col-lg-3 col-6 offset-lg-1">
+        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+          <div class="card-body">
+            <p class="card-text text-muted fs-5">Tardanza</p>
+            <h1 class="fw-bold display-4 mb-0">150</h1>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+          <div class="card-body">
+            <p class="card-text text-muted fs-5">Excusa Justificada</p>
+            <h1 class="fw-bold display-4 mb-0">150</h1>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+          <div class="card-body">
+            <p class="card-text text-muted fs-5">Excusa</p>
+            <h1 class="fw-bold display-4 mb-0">150</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

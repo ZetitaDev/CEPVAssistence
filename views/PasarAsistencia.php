@@ -1,4 +1,21 @@
-<?php
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasar Asistencia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+
+
+    <?php
 include '../includes/sidebar.php';
 
 // Verificar si se ha enviado el formulario
@@ -37,23 +54,10 @@ if ($result->num_rows > 0) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pasar Asistencia</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
 
         <!-- Content Wrapper -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="margin-top: -50px; max-height: 650px" >
             <div class="container mt-5">
                 <h1 class="text-center">Pasar Asistencia</h1>
                 <div class="mb-4">
@@ -68,8 +72,9 @@ if ($result->num_rows > 0) {
 
                 <form id="asistenciaForm" method="POST">
                     <input type="hidden" name="curso_id" id="hidden_curso_id">
+                    <div class="table-responsive" style="max-height: 660px; overflow-x: auto;">
                     <table class="table table-bordered" id="studentsTable">
-                        <thead>
+                        <thead style="position: sticky; top: 0; background-color: #f1f1f1; border: 1px solid #ddd; padding: 8px;">
                             <tr>
                                 <th>Estudiante</th>
                                 <th>Estado</th>
@@ -80,6 +85,7 @@ if ($result->num_rows > 0) {
                             <!-- Los estudiantes se cargarán dinámicamente aquí -->
                         </tbody>
                     </table>
+                        </div>
                     <button type="submit" class="btn btn-success w-100 mt-3" style="display: none;" id="guardarBtn">Guardar Asistencia</button>
                 </form>
             </div>

@@ -184,7 +184,7 @@ $stmt->close();
     <!-- Dropdown de Usuario -->
     <ul class="navbar-nav ms-auto">
         <li class="nav-item dropdown">
-            <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1"
+            <button class="btn btn-white dropdown-toggle" type="button"data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user me-2"></i> <?php echo htmlspecialchars($nombreUsuario); ?>
             </button>

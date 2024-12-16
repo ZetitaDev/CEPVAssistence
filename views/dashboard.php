@@ -26,6 +26,44 @@
   <?php
   include '../includes/sidebar.php';
 
+  $query_genero = "SELECT sexo, COUNT(*) as cantidad 
+                 FROM estudiantes 
+                 WHERE curso_id = ? 
+                 GROUP BY sexo";
+
+$stmt = $conn->prepare($query_genero);
+$stmt->bind_param("i", $curso_id); // Suponiendo que tienes el curso_id
+$stmt->execute();
+$result_genero = $stmt->get_result();
+
+$generos = [
+    'M' => 0,
+    'F' => 0
+];
+
+while ($row = $result_genero->fetch_assoc()) {
+    $generos[$row['sexo']] = $row['cantidad'];
+}
+
+// Obtener totales de presentes y ausentes
+$query_asistencia = "SELECT estado, COUNT(*) as cantidad 
+                     FROM asistencia 
+                     WHERE fecha BETWEEN '2024-11-01' AND '2024-11-07'
+                     GROUP BY estado";
+$result_asistencia = $conn->query($query_asistencia);
+
+$asistencia_totales = [
+    'presente' => 0,
+    'ausente' => 0
+];
+
+while ($row = $result_asistencia->fetch_assoc()) {
+    if (isset($asistencia_totales[$row['estado']])) {
+        $asistencia_totales[$row['estado']] = $row['cantidad'];
+    }
+}
+
+
   // Ejemplo de consulta para obtener datos de asistencia semanal
   $query = "SELECT DAYOFWEEK(fecha) as dia, estado, COUNT(*) as cantidad 
             FROM asistencia 
@@ -82,63 +120,64 @@
                         <p class="card-text text-muted fs-5">Asistencia Semanal</p>
                         <div id="chart2"></div>
                         <script>
-                          document.addEventListener('DOMContentLoaded', function () {
-                            var options = {
-                              series: [{
-                                name: 'Presente',
-                                data: <?php echo json_encode($asistencia_semanal['presente']); ?>
-                              }, {
-                                name: 'Excusa',
-                                data: <?php echo json_encode($asistencia_semanal['excusa']); ?>
-                              }, {
-                                name: 'Tardanza',
-                                data: <?php echo json_encode($asistencia_semanal['tardanza']); ?>
-                              }, {
-                                name: 'Ausente',
-                                data: <?php echo json_encode($asistencia_semanal['ausente']); ?>
-                              }],
-                              chart: {
-                                type: 'bar',
-                                height: 350
-                              },
-                              plotOptions: {
-                                bar: {
-                                  horizontal: false,
-                                  columnWidth: '80%',
-                                },
-                              },
-                              dataLabels: {
-                                enabled: false
-                              },
-                              stroke: {
-                                show: true,
-                                width: 2,
-                                colors: ['transparent']
-                              },
-                              xaxis: {
-                                categories: <?php echo json_encode($days_of_week); ?>,
-                              },
-                              yaxis: {
-                                title: {
-                                  text: 'Semanal'
-                                }
-                              },
-                              fill: {
-                                opacity: 1
-                              },
-                              tooltip: {
-                                y: {
-                                  formatter: function (val) {
-                                    return val + " Alumnos";
-                                  }
-                                }
-                              }
-                            };
+document.addEventListener('DOMContentLoaded', function () {
+    var options = {
+        series: [{
+            name: 'Presente',
+            data: <?php echo json_encode($asistencia_semanal['presente']); ?>
+        }, {
+            name: 'Excusa',
+            data: <?php echo json_encode($asistencia_semanal['excusa']); ?>
+        }, {
+            name: 'Tardanza',
+            data: <?php echo json_encode($asistencia_semanal['tardanza']); ?>
+        }, {
+            name: 'Ausente',
+            data: <?php echo json_encode($asistencia_semanal['ausente']); ?>
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '80%',
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: <?php echo json_encode($days_of_week); ?>,
+        },
+        yaxis: {
+            title: {
+                text: 'Semanal'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + " Alumnos";
+                }
+            }
+        }
+    };
 
-                            var chart = new ApexCharts(document.querySelector("#chart2"), options);
-                            chart.render();
-                          });
-                        </script>
+    var chart = new ApexCharts(document.querySelector("#chart2"), options);
+    chart.render();
+});
+</script>
+
                       </div>
                     </div>
                   </div>
@@ -215,41 +254,41 @@
 
                 <!-- Estadísticas de asistencia -->
                 <div class="estadisticas" style="margin-left: 45px;">
-                  <div class="row">
-                    <div class="col-lg-3 col-6">
-                      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-                        <div class="card-body">
-                          <p class="card-text text-muted fs-5">Varones</p>
-                          <h1 class="fw-bold display-4 mb-0">150</h1>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-                        <div class="card-body">
-                          <p class="card-text text-muted fs-5">Hembras</p>
-                          <h1 class="fw-bold display-4 mb-0">150</h1>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-                        <div class="card-body">
-                          <p class="card-text text-muted fs-5">Total de Presentes</p>
-                          <h1 class="fw-bold display-4 mb-0">150</h1>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
-                        <div class="card-body">
-                          <p class="card-text text-muted fs-5">Total de Ausentes</p>
-                          <h1 class="fw-bold display-4 mb-0">150</h1>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+  <div class="row">
+    <div class="col-lg-3 col-6">
+      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+        <div class="card-body">
+          <p class="card-text text-muted fs-5">Varones</p>
+          <h1 class="fw-bold display-4 mb-0"><?php echo $generos['M']; ?></h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+        <div class="card-body">
+          <p class="card-text text-muted fs-5">Hembras</p>
+          <h1 class="fw-bold display-4 mb-0"><?php echo $generos['F']; ?></h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+        <div class="card-body">
+          <p class="card-text text-muted fs-5">Total de Presentes</p>
+          <h1 class="fw-bold display-4 mb-0"><?php echo $asistencia_totales['presente']; ?></h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-6">
+      <div class="card text-center shadow" style="width: 18rem; border-radius: 10px;">
+        <div class="card-body">
+          <p class="card-text text-muted fs-5">Total de Ausentes</p>
+          <h1 class="fw-bold display-4 mb-0"><?php echo $asistencia_totales['ausente']; ?></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
               </div>
             </div>

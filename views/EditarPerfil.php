@@ -199,17 +199,35 @@ $user = $result->fetch_assoc();
         }
 
         function confirmPasswordChange() {
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
 
-            if (newPassword === confirmPassword) {
-                alert('Contraseña cambiada exitosamente.');
-                // Aquí agregar lógica para actualizar la contraseña en el backend.
+    if (newPassword === confirmPassword) {
+        // Enviar la nueva contraseña al backend para actualizarla
+        fetch('cambiar_contrasena.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ newPassword: newPassword })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert('Contraseña actualizada correctamente.');
                 document.getElementById('passwordModal').modal('hide');
             } else {
-                alert('Las contraseñas no coinciden.');
+                alert('Error al cambiar la contraseña.');
             }
-        }
+        })
+        .catch(error => {
+            console.error('Error al procesar la solicitud:', error);
+            alert('Hubo un problema al cambiar la contraseña.');
+        });
+    } else {
+        alert('Las contraseñas no coinciden.');
+    }
+}
 
         function openAvatarModal() {
             document.getElementById('upload-photo').click();

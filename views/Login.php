@@ -40,8 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $user['correo']; // Guardar el correo en la sesión
             $_SESSION['role'] = $user['rol']; // Guardar el rol en la sesión
 
-            // Redirigir al dashboard.php
-            header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
+            // Redirigir según el rol del usuario
+            if ($_SESSION['role'] == 'usuario') {
+                header("Location: dashboard_maestro.php"); // Redirigir a dashboard de maestro
+            } else {
+                header("Location: dashboard.php"); // Redirigir al dashboard de administrador u otro rol
+            }
             exit();
         } else {
             // Si la contraseña no coincide

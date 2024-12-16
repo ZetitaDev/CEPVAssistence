@@ -1,3 +1,18 @@
+<?php
+// Incluir el archivo de conexión a la base de datos
+include '../includes/sidebar.php';
+
+// Suponemos que el correo del usuario está almacenado en la sesión
+$correo = $_SESSION['username'];
+
+// Consultar los datos del usuario usando el correo
+$query = "SELECT nombre, apellido, sexo, correo, telefono, fecha_nacimiento, foto_perfil FROM usuarios WHERE correo = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $correo); // 's' para indicar que es un string
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,16 +25,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Tema AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
-
-    <title>Dashboard</title>
+    <title>Editar Perfil</title>
     <link rel="stylesheet" href="../css/styleperfil.css">
 </head>
 
+<style>
+input[readonly] {
+    background-color: rgb(255, 255, 255);
+    cursor: not-allowed;
+}
+</style>
+
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-    <?php
-include '../includes/sidebar.php';
-?>
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <!-- Content Header -->
@@ -39,114 +57,58 @@ include '../includes/sidebar.php';
                                 </div>
                                 <div class="card-body">
                                     <div class="form-container">
-                                        <!-- Column 1 -->
-
                                         <div class="form-column">
                                             <div class="form-group">
                                                 <label for="nombre">Nombre</label>
-                                                <input type="text" id="nombre" placeholder="Ingrese su nombre">
+                                                <input type="text" id="nombre" value="<?php echo htmlspecialchars($user['nombre']); ?>" placeholder="Ingrese su nombre">
                                             </div>
                                             <div class="form-group">
                                                 <label for="sexo">Sexo</label>
                                                 <select id="sexo">
-                                                    <option value="">Seleccione</option>
-                                                    <option value="masculino">Masculino</option>
-                                                    <option value="femenino">Femenino</option>
+                                                    <option value="M" <?php echo ($user['sexo'] == 'M') ? 'selected' : ''; ?>>Masculino</option>
+                                                    <option value="F" <?php echo ($user['sexo'] == 'F') ? 'selected' : ''; ?>>Femenino</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="edad">Edad</label>
-                                                <input type="number" id="edad" placeholder="Ingrese su Edad">
+                                                <label for="correo">Correo Electrónico</label>
+                                                <input type="email" id="correo" value="<?php echo htmlspecialchars($user['correo']); ?>" placeholder="Ingrese su Correo" readonly>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="direccion">Dirección</label>
-                                                <input type="text" id="direccion" placeholder="Ingrese su Dirección">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email">Correo Electrónico</label>
-                                                <input type="email" id="email" placeholder="Ingrese su Correo">
-                                            </div><br>
-                                            
-                            <div class="d-grid gap-2 d-md-block">
-                                <button class="btn btn-warning" type="button">Actualizar</button>
-                                <button class="btn btn-secondary" type="button">Cancelar</button>
-                            </div>
 
+                                            <div class="d-grid gap-2 d-md-block">
+                                            <button class="btn btn-warning" type="button" onclick="updateProfile()">Actualizar</button>
+                                                <button class="btn btn-secondary" type="button" onclick="cancelEdit()">Cancelar</button>
+                                            </div>
                                         </div>
 
-                                        <!-- Column 2 -->
                                         <div class="form-column">
                                             <div class="form-group">
                                                 <label for="apellido">Apellido</label>
-                                                <input type="text" id="apellido" placeholder="Ingrese su apellido">
+                                                <input type="text" id="apellido" value="<?php echo htmlspecialchars($user['apellido']); ?>" placeholder="Ingrese su apellido">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="nacimiento">Fecha de Nacimiento</label>
-                                                <input type="date" id="nacimiento"
-                                                    placeholder="Ingrese su Fecha de Nacimiento">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="nacionalidad">Nacionalidad</label>
-                                                <select id="nacionalidad" name="nacionalidad" required>
-                                                    <option value="" disabled selected>Seleccione su nacionalidad
-                                                    </option>
-                                                    <option value="AF">Afganistán</option>
-                                                    <option value="AL">Albania</option>
-                                                    <option value="DZ">Argelia</option>
-                                                    <option value="AR">Argentina</option>
-                                                    <option value="BO">Bolivia</option>
-                                                    <option value="BR">Brasil</option>
-                                                    <option value="CA">Canadá</option>
-                                                    <option value="CL">Chile</option>
-                                                    <option value="CN">China</option>
-                                                    <option value="CO">Colombia</option>
-                                                    <option value="CR">Costa Rica</option>
-                                                    <option value="CU">Cuba</option>
-                                                    <option value="DO">República Dominicana</option>
-                                                    <option value="EC">Ecuador</option>
-                                                    <option value="EG">Egipto</option>
-                                                    <option value="ES">España</option>
-                                                    <option value="FR">Francia</option>
-                                                    <option value="DE">Alemania</option>
-                                                    <option value="IN">India</option>
-                                                    <option value="IT">Italia</option>
-                                                    <option value="JP">Japón</option>
-                                                    <option value="MX">México</option>
-                                                    <option value="NG">Nigeria</option>
-                                                    <option value="PE">Perú</option>
-                                                    <option value="RU">Rusia</option>
-                                                    <option value="ZA">Sudáfrica</option>
-                                                    <option value="SE">Suecia</option>
-                                                    <option value="GB">Reino Unido</option>
-                                                    <option value="US">Estados Unidos</option>
-                                                    <option value="VE">Venezuela</option>
-                                                    <!-- Añade más países según necesidad -->
-                                                </select>
+                                                <input type="date" id="nacimiento" value="<?php echo $user['fecha_nacimiento']; ?>" placeholder="Ingrese su Fecha de Nacimiento">
                                             </div>
 
                                             <div class="form-group">
                                                 <label for="telefono">Teléfono</label>
-                                                <input type="text" id="telefono" placeholder="Ingrese su teléfono">
+                                                <input type="text" id="telefono" value="<?php echo htmlspecialchars($user['telefono']); ?>" placeholder="Ingrese su teléfono">
                                             </div>
                                             <div class="form-group">
                                                 <label for="password">Contraseña</label>
                                                 <input type="password" id="password" placeholder="Ingrese su contraseña">
                                             </div>
-                                            
-                                       
-                                    </div>
-                                      <!-- Column 3 -->
-                                      <div class="profile-picture">
-                                            <img src=  "../avatares/usuario.png" alt="Foto de perfil"
-                                                id="profile-img"><br>
-                                            <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar
-                                                Foto</button>
-                                            <input type="file" id="upload-photo" accept="image/*"
-                                                onchange="updateProfileImage(event)">
                                         </div>
-                                        
+                                      
+                                      <!-- Perfil y foto -->
+                                      <div class="profile-picture">
+                                          <img src="../avatares/<?php echo htmlspecialchars($user['foto_perfil']); ?>" alt="Foto de perfil" id="profile-img" class="img-thumbnail">
+                                          <br>
+                                          <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar Foto</button>
+                                          <input type="file" id="upload-photo" accept="image/*" onchange="updateProfileImage(event)" style="display: none;">
+                                      </div>
+                                      
                                 </div>
                             </div>
                         </section>
@@ -154,6 +116,7 @@ include '../includes/sidebar.php';
                 </div>
             </section>
         </div>
+
         <?php
         include '../includes/footer.php';
         ?>
@@ -168,62 +131,25 @@ include '../includes/sidebar.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <!-- Avatares predefinidos -->
                     <div class="row">
                         <div class="col-4 mb-3">
-                            <img src="../avatares/nino.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
+                            <img src="../avatares/nino.png" class="img-thumbnail avatar-option" onclick="selectAvatar(this.src)">
                         </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/hombre.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/hombre chaqueta roja.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/hombre rubio.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/hombre amarillo.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/mujerpcorto.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/mujer morena.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/mujer.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
-                        <div class="col-4 mb-3">
-                            <img src="../avatares/mujer amarilla.png" class="img-thumbnail avatar-option"
-                                onclick="selectAvatar(this.src)">
-                        </div>
+                        <!-- Más avatares -->
                     </div>
                 </div>
                 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    <button type="button" class="btn btn-primary" onclick="openFilePicker()">Subir Imagen</button>
-    <button type="button" class="btn btn-danger" onclick="removeProfileImage()">Eliminar Foto de Perfil</button>
-</div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="openFilePicker()">Subir Imagen</button>
+                    <button type="button" class="btn btn-danger" onclick="removeProfileImage()">Eliminar Foto de Perfil</button>
+                </div>
             </div>
-
         </div>
-     
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-
     <script>
-
-
         function openAvatarModal() {
             const avatarModal = new bootstrap.Modal(document.getElementById('avatarModal'));
             avatarModal.show();
@@ -239,22 +165,54 @@ include '../includes/sidebar.php';
             document.getElementById('upload-photo').click();
         }
 
-        function updateProfileImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById('profile-img').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        function removeProfileImage() {
+            document.getElementById('profile-img').src = "../avatares/usuario.png";
         }
 
-        function removeProfileImage() {
-    const profileImg = document.getElementById('profile-img'); // Cambia 'profile-img' si usas otro id
-    profileImg.src = "../avatares/usuario.png"; // Imagen predeterminada
-}
-    </script>
+        function updateProfile() {
+    const nombre = document.getElementById('nombre').value;
+    const apellido = document.getElementById('apellido').value;
+    const sexo = document.getElementById('sexo').value;
+    const telefono = document.getElementById('telefono').value;
+    const nacimiento = document.getElementById('nacimiento').value;
+    const password = document.getElementById('password').value;
 
+    // Comprobar si la contraseña está vacía (si no lo está, se incluye)
+    const passwordParam = password ? `&password=${encodeURIComponent(password)}` : '';
+
+    // Crear la solicitud AJAX
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '../ajax/update_profile.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Manejar la respuesta de la solicitud
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                // Alerta si la actualización fue exitosa
+                alert('Perfil actualizado correctamente');
+                location.reload();  // Recargar la página para reflejar los cambios
+            } else {
+                // Alerta si hubo un error en la actualización
+                alert('Error al actualizar el perfil: ' + response.message);
+            }
+        } else {
+            // Alerta si hubo un error en la solicitud AJAX
+            alert('Error al enviar la solicitud. Estado: ' + xhr.status);
+        }
+    };
+
+    // Enviar los datos al servidor
+    xhr.send(`nombre=${encodeURIComponent(nombre)}&apellido=${encodeURIComponent(apellido)}&sexo=${encodeURIComponent(sexo)}&telefono=${encodeURIComponent(telefono)}&fecha_nacimiento=${encodeURIComponent(nacimiento)}&correo=${encodeURIComponent('<?php echo $correo; ?>')}${passwordParam}`);
+}
+
+
+        // Función para cancelar la edición
+        function cancelEdit() {
+            alert("Edición cancelada");
+            header (location, 'dashboard.php');
+        }
+    </script>
 </body>
 </html>

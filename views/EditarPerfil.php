@@ -1,18 +1,4 @@
-<?php
-// Incluir el archivo de conexión a la base de datos
-include '../includes/sidebar.php';
 
-// Suponemos que el correo del usuario está almacenado en la sesión
-$correo = $_SESSION['username'];
-
-// Consultar los datos del usuario usando el correo
-$query = "SELECT nombre, apellido, sexo, correo, telefono, fecha_nacimiento, foto_perfil FROM usuarios WHERE correo = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("s", $correo); // 's' para indicar que es un string
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -38,6 +24,22 @@ input[readonly] {
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
+
+    <?php
+// Incluir el archivo de conexión a la base de datos
+include '../includes/sidebar.php';
+
+// Suponemos que el correo del usuario está almacenado en la sesión
+$correo = $_SESSION['username'];
+
+// Consultar los datos del usuario usando el correo
+$query = "SELECT nombre, apellido, sexo, correo, telefono, fecha_nacimiento, foto_perfil FROM usuarios WHERE correo = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $correo); // 's' para indicar que es un string
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+?>
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <!-- Content Header -->
@@ -76,7 +78,7 @@ input[readonly] {
 
                                             <div class="d-grid gap-2 d-md-block">
                                             <button class="btn btn-warning" type="button" onclick="updateProfile()">Actualizar</button>
-                                                <button class="btn btn-secondary" type="button" onclick="cancelEdit()">Cancelar</button>
+                                                <button class="btn btn-secondary" type="button"  href="dashboard.php" onclick="cancelEdit()">Cancelar</button>
                                             </div>
                                         </div>
 

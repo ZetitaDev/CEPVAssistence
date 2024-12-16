@@ -40,7 +40,7 @@ $stmt->close();
 <?php if (!isset($hideSidebar) || !$hideSidebar): ?>
     <!-- Sidebar -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
-        <a href="../views/dashboard.php" class="brand-link d-flex align-items-center">
+        <a href="../views/dashboard_maestro.php" class="brand-link d-flex align-items-center">
             <!-- Imagen pequeña -->
             <img src="../css/loguito.png" alt="Logo" class="brand-image">
             <span class="brand-text font-weight-light text-shift">CEPVAssistences</span>

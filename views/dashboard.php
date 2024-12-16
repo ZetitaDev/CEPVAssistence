@@ -26,9 +26,6 @@
   <?php
   include '../includes/sidebar.php';
 
-  // Conexión a la base de datos
-  include '../includes/sidebar.php';
-
   // Ejemplo de consulta para obtener datos de asistencia semanal
   $query = "SELECT DAYOFWEEK(fecha) as dia, estado, COUNT(*) as cantidad 
             FROM asistencia 

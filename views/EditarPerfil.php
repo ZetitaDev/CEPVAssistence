@@ -44,7 +44,6 @@ $user = $result->fetch_assoc();
         margin-bottom: 2rem;
     }
 
-    /* Estilo para mejorar separación en el modal de la contraseña */
     .modal-body .form-group {
         margin-bottom: 1.2rem;
     }
@@ -88,7 +87,7 @@ $user = $result->fetch_assoc();
                                                 <input type="email" id="correo" value="<?php echo htmlspecialchars($user['correo']); ?>" placeholder="Ingrese su Correo" readonly>
                                             </div>
                                             <div class="form-group">
-                                                <button class="btn btn-warning" onclick="openPasswordModal()">Cambiar Contraseña</button>
+                                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#passwordModal">Cambiar Contraseña</button>
                                             </div>
                                         </div>
 
@@ -115,7 +114,7 @@ $user = $result->fetch_assoc();
                                         <div class="profile-picture">
                                             <img src="../avatares/<?php echo htmlspecialchars($user['foto_perfil']); ?>" alt="Foto de perfil" id="profile-img" class="img-thumbnail">
                                             <br>
-                                            <button class="btn btn-primary mt-2" onclick="openAvatarModal()">Cambiar Foto</button>
+                                            <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#avatarModal">Cambiar Foto</button>
                                             <input type="file" id="upload-photo" accept="image/*" onchange="updateProfileImage(event)" style="display: none;">
                                         </div>
                                     </div>
@@ -160,116 +159,123 @@ $user = $result->fetch_assoc();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" onclick="confirmPasswordChange()">Confirmar</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmPasswordChange()">Aceptar</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Modal para selección de avatar -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="avatarModalLabel">Selecciona Tu Avatar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="upload-photo">Sube una imagen</label>
+                        <input type="file" id="upload-photo" accept="image/*" onchange="updateProfileImage(event)" class="form-control">
+                    </div>
+                    <div class="row">
+                        <!-- Opciones de avatar (opcional si no quieres cargar una imagen personalizada) -->
+                        <div class="col-4 mb-3"><img src="../avatares/nino.png" class="img-thumbnail avatar-option" onclick="selectAvatar(this.src)"></div>
+                        <div class="col-4 mb-3"><img src="../avatares/hombre.png" class="img-thumbnail avatar-option" onclick="selectAvatar(this.src)"></div>
+                        <div class="col-4 mb-3"><img src="../avatares/mujer.png" class="img-thumbnail avatar-option" onclick="selectAvatar(this.src)"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="acceptAvatarSelection()">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y dependencia Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
     <script>
-        function openPasswordModal() {
-            const passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
-            passwordModal.show();
+        // Función para mostrar u ocultar las contraseñas
+        function togglePasswordVisibility(id) {
+            const passwordField = document.getElementById(id);
+            const icon = passwordField.nextElementSibling.querySelector('i');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
         }
 
-        function togglePasswordVisibility(inputId) {
-            const input = document.getElementById(inputId);
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-
+        // Función para verificar la fuerza de la contraseña
         function checkPasswordStrength() {
             const password = document.getElementById('newPassword').value;
-            let strength = '';
-            const strengthBar = document.getElementById('passwordStrength');
+            const strengthField = document.getElementById('passwordStrength');
             
-            const strongPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            const mediumPasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+            let strength = 0;
+            
+            // Evalúa la fuerza de la contraseña
+            if (password.length >= 8) strength += 1; // Al menos 8 caracteres
+            if (/[A-Z]/.test(password)) strength += 1; // Letra mayúscula
+            if (/[a-z]/.test(password)) strength += 1; // Letra minúscula
+            if (/[0-9]/.test(password)) strength += 1; // Número
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Caracter especial
 
-            if (strongPasswordPattern.test(password)) {
-                strength = 'Fuerte';
-            } else if (mediumPasswordPattern.test(password)) {
-                strength = 'Media';
-            } else if (password.length > 5) {
-                strength = 'Débil';
+            // Asignar nivel de dificultad
+            if (strength === 0) {
+                strengthField.value = "Muy débil";
+            } else if (strength <= 2) {
+                strengthField.value = "Débil";
+            } else if (strength === 3) {
+                strengthField.value = "Fuerte";
             } else {
-                strength = 'Muy Débil';
+                strengthField.value = "Muy fuerte";
             }
-            
-            strengthBar.value = strength;
         }
 
+        // Función para aceptar el cambio de contraseña
         function confirmPasswordChange() {
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
             if (newPassword === confirmPassword) {
-                alert('Contraseña cambiada exitosamente.');
-                // Aquí agregar lógica para actualizar la contraseña en el backend.
-                document.getElementById('passwordModal').modal('hide');
+                // Aquí agregas la lógica para actualizar la contraseña en el servidor (AJAX, etc.)
+                alert("Contraseña cambiada correctamente.");
+                $('#passwordModal').modal('hide');
             } else {
-                alert('Las contraseñas no coinciden.');
+                alert("Las contraseñas no coinciden.");
             }
         }
 
-        function openAvatarModal() {
-            document.getElementById('upload-photo').click();
-        }
-
+        // Función para actualizar la foto de perfil
         function updateProfileImage(event) {
-            var file = event.target.files[0];
+            const file = event.target.files[0];
             if (file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
                     document.getElementById('profile-img').src = e.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         }
 
-        function updateProfile() {
-            const nombre = document.getElementById('nombre').value;
-            const apellido = document.getElementById('apellido').value;
-            const sexo = document.getElementById('sexo').value;
-            const telefono = document.getElementById('telefono').value;
-            const nacimiento = document.getElementById('nacimiento').value;
-
-            const data = {
-                nombre: nombre,
-                apellido: apellido,
-                sexo: sexo,
-                telefono: telefono,
-                nacimiento: nacimiento
-            };
-
-            fetch('actualizar_perfil.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    alert('Perfil actualizado correctamente.');
-                } else {
-                    alert('Error al actualizar el perfil.');
-                }
-            })
-            .catch(error => {
-                console.error('Error al procesar la solicitud:', error);
-                alert('Hubo un problema al actualizar el perfil.');
-            });
+        // Función para aceptar selección de avatar
+        function selectAvatar(src) {
+            document.getElementById('profile-img').src = src;
+            $('#avatarModal').modal('hide');
         }
 
-        function cancelEdit() {
-            window.location.reload();
+        function acceptAvatarSelection() {
+            const imgSrc = document.getElementById('profile-img').src;
+            // Lógica para guardar el nuevo avatar (puede ser un AJAX call)
         }
     </script>
-
-    <!-- Bootstrap JS y dependencias -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>

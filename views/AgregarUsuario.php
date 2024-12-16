@@ -34,16 +34,40 @@
             font-weight: bold;
         }
 
-        .profile-picture {
-            text-align: center;
+        .password-container {
+            position: relative;
         }
 
-        #profile-img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 10px;
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .strength-bar {
+            width: 100%;
+            height: 5px;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        .strength-weak {
+            background-color: red;
+        }
+
+        .strength-medium {
+            background-color: orange;
+        }
+
+        .strength-strong {
+            background-color: green;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
@@ -126,26 +150,25 @@
                                                         <option value="F">Femenino</option>
                                                     </select>
                                                 </div>
+                                               
                                                 <div class="form-group">
-                                                    <label for="telefono">Teléfono</label>
-                                                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el teléfono">
+                                                    <label for="password">Nueva Contraseña</label>
+                                                    <div class="password-container">
+                                                        <i class="toggle-password fas fa-eye" onclick="togglePassword('password')"></i>
+                                                        <input type="password" id="password" name="password" class="form-control" placeholder="Ingrese la nueva contraseña" required>
+                                                    </div>
+                                                    <div id="strength-bar" class="strength-bar"></div>
                                                 </div>
-                                                <!-- Campo de curso (visible solo si el rol es 'usuario') -->
-                                                <div class="form-group" id="curso-container" style="display: none;">
-                                                    <label for="curso_id">Curso Asignado</label>
-                                                    <select name="curso_id" id="curso_id" class="form-control">
-                                                        <option value="" selected disabled>Seleccione un curso</option>
-                                                        <?php
-                                                        // Obtener los cursos disponibles
-                                                        $sql = "SELECT id, curso, nivel FROM cursos";
-                                                        $result = $conn->query($sql);
-                                                        if ($result->num_rows > 0) {
-                                                            while ($row = $result->fetch_assoc()) {
-                                                                echo "<option value='" . $row['id'] . "'>" . $row['curso'] . " - " . $row['nivel'] . "</option>";
-                                                            }
-                                                        }
-                                                        ?>
-                                                    </select>
+                                                <div class="form-group">
+                                                    <label for="confirm_password">Confirmar Contraseña</label>
+                                                    <div class="password-container">
+                                                        <i class="toggle-password fas fa-eye" onclick="togglePassword('confirm_password')"></i>
+                                                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Confirme la contraseña" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="password_strength">Nivel de Dificultad</label>
+                                                    <input type="text" id="password_strength" class="form-control" disabled>
                                                 </div>
                                             </div>
                                             <!-- Columna 2 -->
@@ -164,25 +187,23 @@
                                                         <option value="" selected disabled>Seleccione el rol</option>
                                                         <option value="Administrador">Administrador</option>
                                                         <option value="usuario">Maestro</option>
-                                                    </select>
+                                                    </select><BR>
+                                                    <div class="form-group">
+                                                    <label for="telefono">Teléfono</label>
+                                                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el teléfono">
+                                                </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="correo">Correo</label>
                                                     <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo" required>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="password">Contraseña</label>
-                                                    <div class="password-container">
-                                                    <i class="toggle-password fas fa-eye" onclick="togglePassword()"></i>
-                                                        <input type="password" id="password" name="password" class="form-control"  placeholder="Ingrese la contraseña" required>
-                                                        
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
 
-                                        <div class="form-group text-center">
-                                            <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+                                        <div class="form-group text-center button-container">
+                                            <button type="submit" class="btn btn-primary">Confirmar</button>
+                                            <button type="button" class="btn btn-secondary" onclick="window.location.href='CancelarURL'">Cancelar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -195,21 +216,36 @@
     </div>
 
     <script>
-        // Mostrar campo de curso solo si el rol es 'usuario'
-        document.getElementById('rol').addEventListener('change', function () {
-            const cursoContainer = document.getElementById('curso-container');
-            if (this.value == 'usuario') {
-                cursoContainer.style.display = 'block';
-            } else {
-                cursoContainer.style.display = 'none';
-            }
-        });
-    </script>
+    // Validar la fuerza de la contraseña
+    document.getElementById('password').addEventListener('input', function () {
+        var password = this.value;
+        var strengthBar = document.getElementById('strength-bar');
+        var strengthText = document.getElementById('password_strength');
 
-             <!-- Scripts -->
-             <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
+        // Expresiones regulares para diferentes niveles de fuerza
+        var weak = /^(?=\S)(?!.*\d)(?!.*[!@#$%^&*])[A-Za-z]{1,5}$/;  // Menos de 6 caracteres sin números ni símbolos
+        var medium = /^(?=\S)(?=.*\d)(?=[A-Za-z0-9]{6,8}$)(?!.*[!@#$%^&*])[A-Za-z0-9]*$/;  // 6-8 caracteres con números
+        var strong = /^(?=\S)(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{9,}$/;  // Más de 8 caracteres con números y símbolos
+
+        // Verificación de la fuerza de la contraseña
+        if (strong.test(password)) {
+            strengthBar.classList.add('strength-strong');
+            strengthBar.classList.remove('strength-medium', 'strength-weak');
+            strengthText.value = "Fuerte";
+        } else if (medium.test(password)) {
+            strengthBar.classList.add('strength-medium');
+            strengthBar.classList.remove('strength-strong', 'strength-weak');
+            strengthText.value = "Medio";
+        } else if (weak.test(password)) {
+            strengthBar.classList.add('strength-weak');
+            strengthBar.classList.remove('strength-strong', 'strength-medium');
+            strengthText.value = "Débil";
+        } else {
+            strengthBar.classList.remove('strength-strong', 'strength-medium', 'strength-weak');
+            strengthText.value = "Muy débil";
+        }
+    });
+</script>
 </body>
 
 </html>

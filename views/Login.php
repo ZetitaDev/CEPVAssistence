@@ -1,9 +1,13 @@
 <?php
 session_start(); // Iniciar sesión
 
-// Si ya hay una sesión activa, redirigir al dashboard
+// Si ya hay una sesión activa, redirigir al dashboard según el rol
 if (isset($_SESSION['username'])) {
-    header("Location: dashboard.php"); // Asegúrate de que esta ruta sea correcta
+    if ($_SESSION['role'] == 'usuario') {
+        header("Location: dashboard_maestro.php"); // Redirigir a dashboard de maestro
+    } else {
+        header("Location: dashboard.php"); // Redirigir al dashboard de administrador u otro rol
+    }
     exit();
 }
 
@@ -44,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($_SESSION['role'] == 'usuario') {
                 header("Location: dashboard_maestro.php"); // Redirigir a dashboard de maestro
             } else {
-                header("Location: dashboard.php"); // Redirigir al dashboard de administrador u otro rol
+                header("Location: dashboard.php"); // Redirigir al dashboard de administrador
             }
             exit();
         } else {

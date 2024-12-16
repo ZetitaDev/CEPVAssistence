@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
     <title>Nuevo Estudiante</title>
 </head>
+
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <?php 
@@ -77,7 +79,6 @@
                                                 </div>
                                             </div>
 
-
                                             <!-- Column 2 -->
                                             <div class="form-column w-50">
                                                 <div class="form-group">
@@ -100,7 +101,15 @@
                                                     <label for="numero_tutor">Número de Tutor</label>
                                                     <input type="text" id="numero_tutor" name="numero_tutor" class="form-control" required placeholder="Ingrese el número del tutor">
                                                 </div>
-                                                
+                                                <!-- Campo de Estado -->
+                                                <div class="form-group">
+                                                    <label for="estado">Estado</label>
+                                                    <select id="estado" name="estado" class="form-control" required>
+                                                        <option value="" selected disabled>Seleccione el estado</option>
+                                                        <option value="activo">Activo</option>
+                                                        <option value="retirado">Retirado</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="text-center mt-4">
@@ -131,11 +140,12 @@ if (isset($_POST['submit'])) {
     $telefono = $_POST['telefono'];
     $numero_tutor = $_POST['numero_tutor'];
     $curso_id = $_POST['curso_id'];
+    $estado = $_POST['estado']; // Obtener el estado
 
-    $sql = "INSERT INTO estudiantes (id, nombre, apellido, fecha_nacimiento, fecha_ingreso, sexo, telefono, numero_tutor, curso_id) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO estudiantes (id, nombre, apellido, fecha_nacimiento, fecha_ingreso, sexo, telefono, numero_tutor, curso_id, estado) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isssssisi", $id, $nombre, $apellido, $fecha_nacimiento, $fecha_ingreso, $sexo, $telefono, $numero_tutor, $curso_id);
+    $stmt->bind_param("isssssisis", $id, $nombre, $apellido, $fecha_nacimiento, $fecha_ingreso, $sexo, $telefono, $numero_tutor, $curso_id, $estado);
 
     if ($stmt->execute()) {
         echo "<script>alert('Estudiante registrado correctamente');</script>";

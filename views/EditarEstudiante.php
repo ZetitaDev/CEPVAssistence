@@ -9,7 +9,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = $_GET['id'];
 
 // Obtener datos del estudiante con el ID proporcionado
-$sql = "SELECT nombre, apellido, fecha_nacimiento, telefono, numero_tutor FROM estudiantes WHERE id = ?";
+$sql = "SELECT nombre, apellido, fecha_nacimiento, telefono, numero_tutor, estado FROM estudiantes WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('i', $id);
 $stmt->execute();
@@ -30,13 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fecha_nacimiento = $_POST['fecha_nacimiento'];
     $telefono = $_POST['telefono'];
     $numero_tutor = $_POST['numero_tutor'];
+    $estado = $_POST['estado'];
 
     // Validar los datos antes de actualizar
-    if (!empty($nombre) && !empty($apellido) && !empty($fecha_nacimiento) && !empty($telefono)) {
+    if (!empty($nombre) && !empty($apellido) && !empty($fecha_nacimiento) && !empty($telefono) && !empty($estado)) {
         // Actualizar los datos del estudiante
-        $sql_update = "UPDATE estudiantes SET nombre = ?, apellido = ?, fecha_nacimiento = ?, telefono = ?, numero_tutor = ? WHERE id = ?";
+        $sql_update = "UPDATE estudiantes SET nombre = ?, apellido = ?, fecha_nacimiento = ?, telefono = ?, numero_tutor = ?, estado = ? WHERE id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param('sssssi', $nombre, $apellido, $fecha_nacimiento, $telefono, $numero_tutor, $id);
+        $stmt_update->bind_param('ssssssi', $nombre, $apellido, $fecha_nacimiento, $telefono, $numero_tutor, $estado, $id);
 
         if ($stmt_update->execute()) {
             echo "Estudiante actualizado correctamente. Redirigiendo...";
@@ -87,6 +88,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <label for="numero_tutor">Teléfono del Tutor</label>
                             <input type="text" class="form-control" id="numero_tutor" name="numero_tutor" value="<?php echo htmlspecialchars($estudiante['numero_tutor']); ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <select class="form-control" id="estado" name="estado" required>
+                                <option value="activo" <?php echo $estudiante['estado'] === 'activo' ? 'selected' : ''; ?>>Activo</option>
+                                <option value="inactivo" <?php echo $estudiante['estado'] === 'retirado' ? 'selected' : ''; ?>>Retirado</option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                         <a href="VerEstudiantes.php" class="btn btn-secondary">Cancelar</a>

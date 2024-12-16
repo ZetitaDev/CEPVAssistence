@@ -68,7 +68,10 @@
                                                 <th>ID</th>
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
-                                                <th>Curso</th>
+                                                <th>Fecha de Nacimiento</th>
+                                                <th>Teléfono</th>
+                                                <th>Teléfono del Tutor</th>
+                                                <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody id="studentsTable">

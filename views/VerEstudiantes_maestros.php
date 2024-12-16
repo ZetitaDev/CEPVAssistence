@@ -12,7 +12,7 @@
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <?php
-        include '../includes/sidebar.php'; // Conexión a la base de datos
+        include '../includes/sidebar_maestro.php'; // Conexión a la base de datos
 
         // Parámetros de paginación
         $perPage = isset($_GET['perPage']) ? (int)$_GET['perPage'] : 10; // Cantidad por página (por defecto 10)

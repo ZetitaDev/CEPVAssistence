@@ -1,0 +1,38 @@
+
+
+
+<?php
+
+// Conexión a la base de datos
+$conn = new mysqli("152.167.11.242", "admin", "CePv4dm1n4s1s", "cepvassistence");
+
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Consulta para contar asistencias
+$sql = "SELECT estado, COUNT(*) AS total FROM asistencias GROUP BY cursos";
+$result = $conn->query($sql);
+
+// Inicializar datos para cada estado
+$data = [
+    'Presente' => [],
+    'Excusa' => [],
+    'Tardanza' => [],
+    'Ausente' => []
+];
+
+// Almacenar los resultados en el array
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $data[$row['estado']][] = $row['total'];
+    }
+}
+
+// Convertir los datos a JSON para pasarlos a JavaScript
+echo json_encode($data);
+
+// Cerrar conexión
+$conn->close();
+?>
+

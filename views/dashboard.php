@@ -36,11 +36,11 @@
         <!-- Main row -->
         <div class="row">
           <section class="col-lg-12 connectedSortable">
-            <div class="card" style="margin-top: 20px; padding-buttom: 10px;">
+            <div class="card" style="margin-top: 10px; ">
               <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-chart-pie mr-1"></i>Reporte de Asistencia</h3>
               </div>
-              <div class="card-body" style="max-height: 859px;">
+              <div class="card-body" style="max-height: 880px; margin-top: -30px;">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
                   <div class="row mt-4">

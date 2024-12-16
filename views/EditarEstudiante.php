@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" class="form-control" id="numero_tutor" name="numero_tutor" value="<?php echo htmlspecialchars($estudiante['numero_tutor']); ?>">
                         </div>
                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                        <a href="ListaEstudiantes.php" class="btn btn-secondary">Cancelar</a>
+                        <a href="VerEstudiantes.php" class="btn btn-secondary">Cancelar</a>
                     </form>
                 </div>
             </section>

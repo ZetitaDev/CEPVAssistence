@@ -31,6 +31,10 @@
     <div class="content-wrapper" style="margin-top: -50px;">
       <div class="container mt-5">
         <h1 class="text-center">Consulta de Asistencia</h1>
+        <button id="downloadCsv" class="btn btn-primary mt-3" style="display: none; ">
+  Descargar CSV
+</button> 
+        
 
         <div class="row mb-4">
           <!-- Primer campo (Curso) -->
@@ -38,6 +42,8 @@
             <label for="curso_id" class="form-label">Selecciona el Curso:</label>
             <select id="curso_id" name="curso_id" class="form-select" required>
               <option value="" selected disabled>Seleccione un curso</option>
+             
+              
               <?php foreach ($cursos as $curso): ?>
                 <option value="<?= $curso['id']; ?>"><?= $curso['curso_nivel']; ?></option>
               <?php endforeach; ?>
@@ -61,67 +67,93 @@
   </div>
 
   <script>
-    $(document).ready(function () {
-      // Función para consultar la asistencia automáticamente
-      function consultarAsistencia() {
-        const cursoId = $('#curso_id').val();
-        const fecha = $('#fecha').val();
-        if (cursoId && fecha) {
-          // Hacer la solicitud AJAX para obtener la asistencia
-          $.ajax({
-            url: '../ajax/consultar_asistencia_ajax.php',
-            method: 'GET',
-            data: {
-              curso_id: cursoId,
-              fecha: fecha
-            },
-            success: function (response) {
-              // Mostrar los resultados en la página
-              $('#resultados').html(`
-                                <h3>Asistencia del ${fecha} - Curso: ${$('#curso_id option:selected').text()}</h3>
-                           <div class="table-responsive" style="max-height: 660px; overflow-x: auto;">
-                                <table class="table table-bordered mt-3">
-                                    <thead style="position: sticky; top: 0; background-color: #f1f1f1; border: 1px solid #ddd; padding: 8px;"">
-                                        <tr>
-                                            <th>Estudiante</th>
-                                            <th>Estado</th>
-                                            <th>Comentario</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        ${response}
-                                    </tbody>
-                                </table>
-                                </div>
-                            `);
-            },
-            error: function () {
-              alert('Error al cargar los resultados.');
-            }
-          });
-        }
-      }
+   $(document).ready(function () {
+  // Función para consultar la asistencia automáticamente
+  function consultarAsistencia() {
+    const cursoId = $('#curso_id').val();
+    const fecha = $('#fecha').val();
+    if (cursoId && fecha) {
+      // Hacer la solicitud AJAX para obtener la asistencia
+      $.ajax({
+        url: '../ajax/consultar_asistencia_ajax.php',
+        method: 'GET',
+        data: {
+          curso_id: cursoId,
+          fecha: fecha
+        },
+        success: function (response) {
+          // Mostrar los resultados en la página
+          $('#resultados').html(`
+            <h3>Asistencia del ${fecha} - Curso: ${$('#curso_id option:selected').text()}</h3>
+            <div class="table-responsive" style="max-height: 660px; overflow-x: auto;">
+              <table class="table table-bordered mt-3" id="tablaAsistencia">
+                <thead style="position: sticky; top: 0; background-color: #f1f1f1; border: 1px solid #ddd;">
+                  <tr>
+                    <th>Estudiante</th>
+                    <th>Estado</th>
+                    <th>Comentario</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${response}
+                </tbody>
+              </table>
+            </div>
+          `);
 
-      // Llamar la función cuando el curso o la fecha cambien
-      $('#curso_id, #fecha').change(function () {
-        consultarAsistencia();
+          // Mostrar el botón de descarga
+          $('#downloadCsv').show();
+        },
+        error: function () {
+          alert('Error al cargar los resultados.');
+        }
       });
+    }
+  }
+
+  // Llamar la función cuando el curso o la fecha cambien
+  $('#curso_id, #fecha').change(function () {
+    consultarAsistencia();
+  });
+
+  // Función para descargar los datos de la tabla como CSV
+  $('#downloadCsv').click(function () {
+    const table = $('#tablaAsistencia');
+    let csv = 'Estudiante|Estado|Comentario\n';  // Encabezados del CSV
+
+    // Recorremos las filas de la tabla (sin contar la fila de encabezado)
+    table.find('tbody tr').each(function () {
+      const row = $(this);
+      const estudiante = row.find('td').eq(0).text();
+      const estado = row.find('td').eq(1).text();
+      const comentario = row.find('td').eq(2).text();
+
+      // Convertimos los datos de la fila a formato CSV
+      csv += `"${estudiante}","${estado}","${comentario}"\n`;
     });
 
+    // Crear un enlace de descarga y hacer clic en él
+    const hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';
+    hiddenElement.download = `Asistencia_${$('#curso_id option:selected').text()}_${$('#fecha').val()}.csv`;
+    hiddenElement.click();
+  });
+});
 
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
       // Crear un objeto de fecha
       const today = new Date();
 
       // Obtener el año, mes y día en el formato YYYY-MM-DD
       const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11, por eso se suma 1
+      const month = String(today.getMonth() + 1).padStart(2, '0'); // Mes empieza en 0, se suma 1
       const day = String(today.getDate()).padStart(2, '0'); // Asegurar que el día tenga dos dígitos
 
-      // Crear la fecha en el formato adecuado (YYYY-MM-DD)
+      // Formatear la fecha como YYYY-MM-DD
       const currentDate = `${year}-${month}-${day}`;
 
-      // Establecer el valor predeterminado del input de fecha
+      // Establecer el valor predeterminado del input de tipo date
       document.getElementById('fecha').value = currentDate;
     });
 

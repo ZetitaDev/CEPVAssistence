@@ -165,27 +165,39 @@ $stmt->close();
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
-        </ul>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+          <!-- Fecha actual -->
+    <div class="navbar-text mx-auto">
+        <?php
+        setlocale(LC_TIME, 'es_ES.UTF-8', 'es_ES', 'Spanish_Spain', 'es');
+        date_default_timezone_set('America/Santo_Domingo'); // Configura la zona horaria
+        echo ucfirst(strftime('%A, %d de %B de %Y')); // Ejemplo: Domingo, 15 de diciembre de 2024
+        ?>
+    </div>
+    </ul>
 
-        <!-- Dropdown de Usuario -->
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item dropdown">
-                <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user me-2"></i> <?php echo htmlspecialchars($nombreUsuario); ?>
-                </button>
-                <ul class="dropdown-menu p-3 shadow" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="EditarPerfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
-                    <li><a class="dropdown-item" href="../controllers/logout.php"><i
-                                class="fas fa-power-off me-2"></i>Salir</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
+  
+
+    <!-- Dropdown de Usuario -->
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+            <button class="btn btn-white dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user me-2"></i> <?php echo htmlspecialchars($nombreUsuario); ?>
+            </button>
+            <ul class="dropdown-menu p-3 shadow" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="EditarPerfil.php"><i class="fas fa-user me-2"></i>Perfil</a></li>
+                <li><a class="dropdown-item" href="../controllers/logout.php"><i
+                            class="fas fa-power-off me-2"></i>Salir</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
 </body>
 
 </html>

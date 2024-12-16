@@ -1,10 +1,10 @@
 <?php
 include '../includes/sidebar.php'; // Conexión a la base de datos
 
-// Consulta para obtener la lista de usuarios con rol 'usuario'
-$sql = "SELECT u.nombre, u.apellido, u.sexo, u.rol, u.fecha_nacimiento, u.cedula, u.telefono, u.foto_perfil
+// Consulta para obtener todos los usuarios y el curso (si lo tienen)
+$sql = "SELECT u.nombre, u.apellido, u.sexo, u.rol, c.curso
         FROM usuarios u
-        WHERE u.rol = 'usuario'";
+        LEFT JOIN cursos c ON u.curso_id = c.id";
 
 // Ejecutar la consulta
 $result = $conn->query($sql);
@@ -27,7 +27,7 @@ $result = $conn->query($sql);
     <div class="wrapper">
         <div class="content-wrapper">
             <section class="content">
-                <h1>Lista de Docentes</h1>
+                <h1>Lista de Usuarios</h1>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
@@ -41,8 +41,8 @@ $result = $conn->query($sql);
                                                 <th>Nombre</th>
                                                 <th>Apellido</th>
                                                 <th>Sexo</th>
-                                                <th>Estado</th>
-                                                <th>Curso</th>
+                                                <th>Rol</th>
+                                                <th>Curso Asignado</th>
                                             </tr>
                                         </thead>
                                         <tbody id="myTable">
@@ -52,8 +52,8 @@ $result = $conn->query($sql);
                                                         <td><?php echo $row['nombre']; ?></td>
                                                         <td><?php echo $row['apellido']; ?></td>
                                                         <td><?php echo $row['sexo']; ?></td>
-                                                        <td><?php echo $row['rol']; ?></td>
-                                                        <td>Curso de ejemplo</td> <!-- Cambia esto si tienes información de curso -->
+                                                        <td><?php echo ucfirst($row['rol']); ?></td>
+                                                        <td><?php echo $row['curso'] ? $row['curso'] : 'No asignado'; ?></td> <!-- Mostrar curso o "No asignado" -->
                                                     </tr>
                                                 <?php endwhile; ?>
                                             <?php else: ?>

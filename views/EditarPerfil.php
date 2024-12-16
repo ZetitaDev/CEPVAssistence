@@ -2,7 +2,12 @@
 // Incluir el archivo de conexión a la base de datos
 include '../includes/sidebar.php';
 
-// Suponemos que el correo del usuario está almacenado en la sesión
+if (!isset($_SESSION['username'])) {
+    // Si no hay usuario logueado, redirigir al login
+    header('Location: login.php');
+    exit();
+}
+
 $correo = $_SESSION['username'];
 
 // Consultar los datos del usuario usando el correo
@@ -11,12 +16,22 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $correo); // 's' para indicar que es un string
 $stmt->execute();
 $result = $stmt->get_result();
-$user = $result->fetch_assoc();
+
+// Verificar si la consulta devuelve datos
+if ($result->num_rows > 0) {
+    // Obtener los datos del usuario
+    $user = $result->fetch_assoc();
+} else {
+    // Si no se encuentra el usuario, redirigir o mostrar un mensaje
+    echo "No se encontraron datos para este usuario.";
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
@@ -50,7 +65,9 @@ $user = $result->fetch_assoc();
 </style>
 
 <body class="hold-transition sidebar-mini">
-    <div class="wrapper">
+    <div class="wrapper"><?php
+    include '../includes/sidebar.php';
+?>
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <!-- Content Header -->

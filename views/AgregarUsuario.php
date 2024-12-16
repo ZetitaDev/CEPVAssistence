@@ -1,6 +1,83 @@
+<?php
+// Datos de la base de datos
+$servername = "152.167.11.242";
+$username = "admin";
+$password = "CePv4dm1n4s1s";
+$dbname = "cepvassistence";
+
+// Crear la conexión
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Comprobar la conexión
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Verificar si se enviaron los datos del formulario
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Recoger los datos del formulario
+    $nombre = $_POST['nombre'];
+    $apellido = $_POST['apellido'];
+    $sexo = $_POST['sexo'];
+    $telefono = $_POST['telefono'];
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    $cedula = $_POST['cedula'];
+    $rol = $_POST['rol'];
+    $correo = $_POST['correo'];
+    $password = $_POST['password'];
+
+    // Validación básica
+    if (empty($nombre) || empty($apellido) || empty($sexo) || empty($fecha_nacimiento) || empty($cedula) || empty($rol) || empty($correo) || empty($password)) {
+        echo "<div class='alert alert-danger'>Por favor, complete todos los campos.</div>";
+    } else {
+        // Hashear la contraseña
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Verificar si el rol es "usuario" (maestro) y obtener el curso
+        $curso_id = null;
+        if ($rol == 'usuario' && isset($_POST['curso_id']) && !empty($_POST['curso_id'])) {
+            $curso_id = $_POST['curso_id'];
+
+            // Verificar si el curso_id existe en la tabla cursos
+            $curso_check_sql = "SELECT id FROM cursos WHERE id = ?";
+            $stmt = $conn->prepare($curso_check_sql);
+            $stmt->bind_param("i", $curso_id);
+            $stmt->execute();
+            $stmt->store_result();
+
+            if ($stmt->num_rows == 0) {
+                echo "<div class='alert alert-danger'>El curso seleccionado no existe. Por favor seleccione un curso válido.</div>";
+                exit; // Detener la ejecución si no existe el curso
+            }
+        }
+
+        // Insertar los datos en la base de datos de forma segura con consulta preparada
+        if ($rol == 'usuario') {
+            // Inserción de usuario con curso_id para maestros
+            $query = "INSERT INTO usuarios (nombre, apellido, sexo, telefono, fecha_nacimiento, cedula, rol, correo, password, curso_id) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("sssssssssi", $nombre, $apellido, $sexo, $telefono, $fecha_nacimiento, $cedula, $rol, $correo, $hashed_password, $curso_id);
+        } else {
+            // Inserción de usuario sin curso_id para administradores
+            $query = "INSERT INTO usuarios (nombre, apellido, sexo, telefono, fecha_nacimiento, cedula, rol, correo, password) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("sssssssss", $nombre, $apellido, $sexo, $telefono, $fecha_nacimiento, $cedula, $rol, $correo, $hashed_password);
+        }
+
+        // Ejecutar la consulta y verificar si fue exitosa
+        if ($stmt->execute()) {
+            echo "<div class='alert alert-success'>Usuario agregado correctamente. <a href='../views/Login.php'>Iniciar sesión</a></div>";
+        } else {
+            echo "<div class='alert alert-danger'>Error al agregar el usuario: " . $conn->error . "</div>";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,46 +151,7 @@
 
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
-        <?php
-        include '../includes/sidebar.php';
-        // Verificar si se enviaron los datos del formulario
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Recoger los datos del formulario
-            $nombre = $_POST['nombre'];
-            $apellido = $_POST['apellido'];
-            $sexo = $_POST['sexo'];
-            $telefono = $_POST['telefono'];
-            $fecha_nacimiento = $_POST['fecha_nacimiento'];
-            $cedula = $_POST['cedula'];
-            $rol = $_POST['rol'];
-            $correo = $_POST['correo'];
-            $password = $_POST['password'];
-
-            // Validación básica
-            if (empty($nombre) || empty($apellido) || empty($sexo) || empty($fecha_nacimiento) || empty($cedula) || empty($rol) || empty($correo) || empty($password)) {
-                echo "<div class='alert alert-danger'>Por favor, complete todos los campos.</div>";
-            } else {
-                // Hashear la contraseña
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-                // Verificar si el rol es "usuario" (maestro) y obtener el curso
-                $curso_id = null;
-                if ($rol == 'usuario' && isset($_POST['curso_id'])) {
-                    $curso_id = $_POST['curso_id'];
-                }
-
-                // Insertar los datos en la base de datos
-                $query = "INSERT INTO usuarios (nombre, apellido, sexo, telefono, fecha_nacimiento, cedula, rol, correo, password, curso_id) 
-                          VALUES ('$nombre', '$apellido', '$sexo', '$telefono', '$fecha_nacimiento', '$cedula', '$rol', '$correo', '$hashed_password', '$curso_id')";
-
-                if ($conn->query($query) === TRUE) {
-                    echo "<div class='alert alert-success'>Usuario agregado correctamente. <a href='../views/Login.php'>Iniciar sesión</a></div>";
-                } else {
-                    echo "<div class='alert alert-danger'>Error al agregar el usuario: " . $conn->error . "</div>";
-                }
-            }
-        }
-        ?>
+        <?php include '../includes/sidebar.php'; ?>
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <div class="content-header">
@@ -185,6 +223,7 @@
                                                 <div class="form-group">
                                                     <label for="rol">Rol</label>
                                                     <select id="rol" name="rol" class="form-control" required>
+<<<<<<< Updated upstream
                                                         <option value="" selected disabled>Seleccione el rol</option>
                                                         <option value="Administrador">Administrador</option>
                                                         <option value="usuario">Maestro</option>
@@ -193,11 +232,17 @@
                                                     <label for="telefono">Teléfono</label>
                                                     <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Ingrese el teléfono">
                                                 </div>
+=======
+                                                        <option value="administrador">Administrador</option>
+                                                        <option value="usuario">Usuario (Maestro)</option>
+                                                    </select>
+>>>>>>> Stashed changes
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="correo">Correo</label>
+                                                    <label for="correo">Correo Electrónico</label>
                                                     <input type="email" id="correo" name="correo" class="form-control" placeholder="Ingrese el correo" required>
                                                 </div>
+<<<<<<< Updated upstream
                                                 
                                             </div>
                                         </div>
@@ -206,6 +251,15 @@
                                             <button type="submit" class="btn btn-primary">Confirmar</button>
                                             <button type="button" class="btn btn-secondary" onclick="window.location.href='CancelarURL'">Cancelar</button>
                                         </div>
+=======
+                                                <div class="form-group">
+                                                    <label for="password">Contraseña</label>
+                                                    <input type="password" id="password" name="password" class="form-control" placeholder="Ingrese la contraseña" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+>>>>>>> Stashed changes
                                     </form>
                                 </div>
                             </div>
@@ -215,6 +269,7 @@
             </section>
         </div>
     </div>
+<<<<<<< Updated upstream
 
     <script>
     // Validar la fuerza de la contraseña
@@ -244,6 +299,7 @@
        
     });
 </script>
+=======
+>>>>>>> Stashed changes
 </body>
-
 </html>

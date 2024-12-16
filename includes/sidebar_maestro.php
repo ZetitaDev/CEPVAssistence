@@ -74,7 +74,7 @@ $stmt->close();
 </dl>
 
 <li class="nav-item">
-                        <a href="VerEstudiantes.php" class="nav-link">
+                        <a href="VerEstudiantes_maestros.php" class="nav-link">
                             <i class="nav-icon fas fa-graduation-cap nav-icon"></i>
                             <p>Estudiantes</p>
                         </a>

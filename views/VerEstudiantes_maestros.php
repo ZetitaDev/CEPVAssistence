@@ -132,10 +132,11 @@
                 </div>
         </div>
         </section>
-    </div>
-    <?php
+        <?php
     include '../includes/footer.php';
     ?>
+    </div>
+ 
     </div>
 
     <script>

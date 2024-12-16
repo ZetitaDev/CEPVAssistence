@@ -75,7 +75,7 @@
                                                 <div class="form-group">
                                                     <label for="sexo">Sexo</label>
                                                     <select id="sexo" name="sexo" class="form-control" required>
-                                                        <option value="">Seleccione</option>
+                                                        <option value="" selected disabled>Seleccione</option>
                                                         <option value="M">Masculino</option>
                                                         <option value="F">Femenino</option>
                                                     </select>
@@ -91,7 +91,7 @@
                                                 <div class="form-group">
                                                     <label for="curso_id">Curso</label>
                                                     <select id="curso_id" name="curso_id" class="form-control" required>
-                                                        <option value="">Seleccione un curso</option>
+                                                        <option value="" selected disabled>Seleccione un curso</option>
                                                         <?php foreach ($cursos as $curso): ?>
                                                             <option value="<?php echo $curso['id']; ?>">
                                                                 <?php echo $curso['curso_nivel']; ?>

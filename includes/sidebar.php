@@ -57,7 +57,7 @@ $stmt->close();
                             <i class="right fas fa-angle-down"></i>
                         </p>
                     </a>
-                    <ul class="collapse" id="submenu-asistencia">
+                    <dl class="collapse" id="submenu-asistencia">
                         <li class="nav-item">
                             <a href="../views/VerAsistencia.php" class="nav-link">
                                 <i class="fas fa-user-plus nav-icon"></i>
@@ -70,7 +70,7 @@ $stmt->close();
                                 <p>Pasar Asistencia</p>
                             </a>
                         </li>
-                    </ul>
+                    </dl>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#submenu-estudiantes"
                             aria-expanded="false">

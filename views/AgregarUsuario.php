@@ -241,10 +241,7 @@
             strengthBar.classList.add('strength-weak');
             strengthBar.classList.remove('strength-strong', 'strength-medium');
             strengthText.value = "Débil";
-        } else {
-            strengthBar.classList.remove('strength-strong', 'strength-medium', 'strength-weak');
-            strengthText.value = "Muy débil";
-        }
+       
     });
 </script>
 </body>
